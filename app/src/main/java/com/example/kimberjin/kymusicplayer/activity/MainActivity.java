@@ -16,6 +16,8 @@ import com.example.kimberjin.kymusicplayer.fragment.OnlineFragment;
  *  Created by ky4910 on 2019/09/27
  */
 
+// 可依音乐播放器
+
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;

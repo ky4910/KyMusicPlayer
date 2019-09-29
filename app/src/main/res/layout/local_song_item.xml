@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/local_iView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/image_description"
+        android:src="@drawable/default_music"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/local_iView">
+
+        <TextView
+            android:id="@+id/local_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Music Title"/>
+
+        <TextView
+            android:id="@+id/local_tv_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/local_tv_title"
+            android:text="The Artist"/>
+
+        <TextView
+            android:id="@+id/local_tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="03:58"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+

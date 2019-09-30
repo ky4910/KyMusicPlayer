@@ -2,6 +2,7 @@ package com.example.kimberjin.kymusicplayer.fragment;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -13,9 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.LocalMusicRvAdapter;
+import com.example.kimberjin.kymusicplayer.bean.LocalSong;
+import com.example.kimberjin.kymusicplayer.db.DbClient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  Created by ky4910 on 2019/09/27
@@ -27,6 +34,9 @@ public class LocalFragment extends Fragment {
 
     private RecyclerView recyclerView;
     LocalMusicRvAdapter rvAdapter;
+    DbClient dbClient = new DbClient(getContext());
+
+    private List<LocalSong> localSongsList = new ArrayList<>();
 
     public LocalFragment() {
     }
@@ -39,32 +49,20 @@ public class LocalFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.local_song_item, container, false);
+        View view = inflater.inflate(R.layout.fragment_local_music, container, false);
+        localSongsList = dbClient.getLocalSongs();
+        recyclerView = view.findViewById(R.id.rv_local_music);
+        rvAdapter = new LocalMusicRvAdapter(getContext(), localSongsList);
+        recyclerView.setAdapter(rvAdapter);
+        rvAdapter.setOnItemClickListener(new LocalMusicRvAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Toast.makeText(getContext(), localSongsList.get(position).getTitle()
+                        + "selected!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
-
-    public void initData() {
-        
-    }
-
-    public void getSongs() {
-        try {
-            ContentResolver resolver = getContext().getContentResolver();
-            Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null,
-                    null, null, MediaStore.Audio.AudioColumns.IS_MUSIC);
-            if (cursor != null) {
-                while(cursor.moveToNext()) {
-                    String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
-                    String album = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM));
-                    String artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
-                    int duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
-                    String composer = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.COMPOSER));
-                    Log.e(TAG, title + " " + album + " " + artist + " " + duration + " " + composer);
-                }
-                cursor.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
+

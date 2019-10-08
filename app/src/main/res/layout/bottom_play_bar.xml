@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <SeekBar
+        android:id="@+id/play_progress_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentTop="true"/>
+
+    <ImageView
+        android:id="@+id/img_music_bottom"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:src="@drawable/default_music"
+        android:contentDescription="@string/image_description"/>
+
+    <TextView
+        android:id="@+id/tv_music_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/img_music_bottom"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@color/white"
+        android:text="@string/default_music_name"
+        android:textSize="14sp"
+        android:textColor="@color/gray_5"/>
+
+    <TextView
+        android:id="@+id/tv_music_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_music_name"
+        android:layout_toEndOf="@+id/img_music_bottom"
+        android:layout_marginStart="5dp"
+        android:background="@color/white"
+        android:text="@string/default_author"
+        android:textSize="12sp"
+        android:textColor="@color/gray_5"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_music_duration"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/tv_music_name"-->
+        <!--android:layout_toEndOf="@+id/tv_music_author"-->
+        <!--android:layout_marginStart="10dp"-->
+        <!--android:background="@color/white"-->
+        <!--android:text="@string/default_music_duration"-->
+        <!--android:textSize="12sp"-->
+        <!--android:textColor="@color/gray_5"/>-->
+
+    <RelativeLayout
+        android:id="@+id/rl_play_control"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="6dp"
+        android:layout_alignParentEnd="true">
+
+        <ImageButton
+            android:id="@+id/img_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:src="@drawable/default_stop"
+            android:layout_toStartOf="@+id/img_next"
+            android:contentDescription="@string/image_description"/>
+
+        <ImageButton
+            android:id="@+id/img_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@color/white"
+            android:src="@drawable/default_next"
+            android:contentDescription="@string/image_description"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

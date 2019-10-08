@@ -25,9 +25,9 @@ import butterknife.ButterKnife;
 public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapter.LocalSongViewHolder> {
 
     private Context mContext;
-    private List<LocalSong> localSongList = new ArrayList<>();
+    private List<LocalSong> localSongList;
 
-    public OnItemClickListener mOnItemClickListener;
+    private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
         void onItemClicked(View view, int position);
@@ -57,6 +57,7 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
         localSongViewHolder.imageView.setImageResource(R.drawable.default_music);
         localSongViewHolder.textTitle.setText(localSong.getTitle());
         localSongViewHolder.textArtist.setText(localSong.getArtist());
+        localSongViewHolder.textDuration.setText("03:10");
         // localSongViewHolder.textDuration.setText(String.format());
     }
 

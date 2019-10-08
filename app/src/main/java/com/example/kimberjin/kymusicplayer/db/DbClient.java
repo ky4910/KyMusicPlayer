@@ -30,11 +30,11 @@ public class DbClient {
         this.mContext = mContext;
     }
 
-    public List<LocalSong> getLocalSongs(){
+    public List<LocalSong> getLocalSongs(Context context){
         LocalSong localSongs;
         try {
-            if (mContext != null) {
-                ContentResolver resolver = mContext.getContentResolver();
+            if (context != null) {
+                ContentResolver resolver = context.getContentResolver();
                 Cursor cursor = resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null,
                         null, null, MediaStore.Audio.AudioColumns.IS_MUSIC);
                 if (cursor != null) {
@@ -57,6 +57,6 @@ public class DbClient {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return localSongsList;
     }
 }

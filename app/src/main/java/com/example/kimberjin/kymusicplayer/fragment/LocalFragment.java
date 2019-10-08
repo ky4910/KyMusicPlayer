@@ -33,6 +33,15 @@ import java.util.List;
  *  Created by ky4910 on 2019/09/27
  */
 
+/*
+    播放器底部实现思路：
+        方案1. fragment，但侵入性太强，接入成本高
+        方案2. 悬浮窗，但需要考虑权限问题，以及退出应用后悬浮窗要隐藏。不过应用内弹窗可能不需要权限
+        方案3. rootview 这个思路不错
+        方案4. 利用Material Design中的共享元素，因为位置大小都一样，所以跳转Activity没有变化。理论上
+                可行，浸入性比fragment小
+ */
+
 public class LocalFragment extends Fragment {
 
     public static final String TAG = "LOCALSONG";

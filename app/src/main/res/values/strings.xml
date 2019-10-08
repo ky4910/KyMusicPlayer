@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">KyMusicPlayer</string>
     <string name="image_description" >Nothing</string>
+    <string name="default_music_name">Music Name</string>
+    <string name="default_music_duration">00:00</string>
+    <string name="default_author">Author Unknown</string>
 </resources>

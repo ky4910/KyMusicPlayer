@@ -1,14 +1,12 @@
 package com.example.kimberjin.kymusicplayer.db;
 
-import android.app.Application;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import com.example.kimberjin.kymusicplayer.activity.MainActivity;
-import com.example.kimberjin.kymusicplayer.bean.LocalSong;
+import com.example.kimberjin.kymusicplayer.bean.Music;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
 public class DbClient {
 
     Context mContext;
-    private List<LocalSong> localSongsList = new ArrayList<>();
+    private List<Music> localSongsList = new ArrayList<>();
 
     private static final String TAG = "DbClient";
 
@@ -30,8 +28,8 @@ public class DbClient {
         this.mContext = mContext;
     }
 
-    public List<LocalSong> getLocalSongs(Context context){
-        LocalSong localSongs;
+    public List<Music> getLocalSongs(Context context){
+        Music localSongs;
         try {
             if (context != null) {
                 ContentResolver resolver = context.getContentResolver();
@@ -46,8 +44,7 @@ public class DbClient {
                         String composer = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.COMPOSER));
                         String date_added = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED));
                         Log.e(TAG, title + " " + album + " " + artist + " " + duration + " " + composer + " " + date_added);
-                        localSongs = new LocalSong(title, album, artist, duration, composer, date_added);
-                        localSongsList.add(localSongs);
+                        // localSongsList.add(localSongs);
                     }
                     cursor.close();
                 }

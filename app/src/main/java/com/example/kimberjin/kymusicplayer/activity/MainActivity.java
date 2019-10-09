@@ -1,21 +1,16 @@
 package com.example.kimberjin.kymusicplayer.activity;
 
-import android.content.ContentResolver;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.FragmentAdapter;
 import com.example.kimberjin.kymusicplayer.adapter.MyViewPagerAdapter;
-import com.example.kimberjin.kymusicplayer.bean.LocalSong;
 import com.example.kimberjin.kymusicplayer.fragment.HistoryFragment;
 import com.example.kimberjin.kymusicplayer.fragment.LocalFragment;
 import com.example.kimberjin.kymusicplayer.fragment.OnlineFragment;

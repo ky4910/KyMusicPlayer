@@ -6,14 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kimberjin.kymusicplayer.R;
-import com.example.kimberjin.kymusicplayer.bean.LocalSong;
+import com.example.kimberjin.kymusicplayer.bean.Music;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,7 +23,7 @@ import butterknife.ButterKnife;
 public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapter.LocalSongViewHolder> {
 
     private Context mContext;
-    private List<LocalSong> localSongList;
+    private List<Music> musicList;
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -37,9 +35,9 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
         this.mOnItemClickListener = clickListener;
     }
 
-    public LocalMusicRvAdapter(Context mContext, List<LocalSong> localSongList) {
+    public LocalMusicRvAdapter(Context mContext, List<Music> musicList) {
         this.mContext = mContext;
-        this.localSongList = localSongList;
+        this.musicList = musicList;
     }
 
     @NonNull
@@ -53,17 +51,17 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
 
     @Override
     public void onBindViewHolder(@NonNull LocalSongViewHolder localSongViewHolder, int i) {
-        LocalSong localSong = localSongList.get(i);
+        Music music = musicList.get(i);
         localSongViewHolder.imageView.setImageResource(R.drawable.default_music);
-        localSongViewHolder.textTitle.setText(localSong.getTitle());
-        localSongViewHolder.textArtist.setText(localSong.getArtist());
+        localSongViewHolder.textTitle.setText(music.getTitle());
+        localSongViewHolder.textArtist.setText(music.getArtist());
         localSongViewHolder.textDuration.setText("03:10");
         // localSongViewHolder.textDuration.setText(String.format());
     }
 
     @Override
     public int getItemCount() {
-        return localSongList.size();
+        return musicList.size();
     }
 
     public class LocalSongViewHolder extends RecyclerView.ViewHolder {

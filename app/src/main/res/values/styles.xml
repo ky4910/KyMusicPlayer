@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="StartTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@mipmap/boot_page</item>
+    </style>
+
 </resources>

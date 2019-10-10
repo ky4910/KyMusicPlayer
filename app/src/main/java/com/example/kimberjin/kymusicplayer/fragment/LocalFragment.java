@@ -19,8 +19,7 @@ import com.example.kimberjin.kymusicplayer.adapter.LocalMusicRvAdapter;
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.db.DbClient;
 import com.example.kimberjin.kymusicplayer.service.PlayerService;
-import com.example.kimberjin.kymusicplayer.service.PlayerServiceConnection;
-import com.example.kimberjin.kymusicplayer.util.AppVal;
+import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ public class LocalFragment extends Fragment {
     LocalMusicRvAdapter rvAdapter;
     DbClient dbClient = new DbClient();
 
+    public PlayerService.MusicBinder mBinder;
     private List<Music> localSongsList = new ArrayList<>();
 
     public LocalFragment() {
@@ -55,6 +55,11 @@ public class LocalFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (this.mBinder == null) {
+            Log.e(TAG, "mBinder is null!");
+        } else {
+            Log.e(TAG, "It is ok!");
+        }
     }
 
     @Nullable
@@ -82,6 +87,8 @@ public class LocalFragment extends Fragment {
             public void onItemClicked(View view, int position) {
                 Toast.makeText(getContext(), localSongsList.get(position).getTitle()
                         + " selected!", Toast.LENGTH_SHORT).show();
+//                getBinder().onPlay(localSongsList, position);
+                GlobalVal.getPlayService().test();
             }
         });
 

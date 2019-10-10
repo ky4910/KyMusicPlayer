@@ -5,15 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.kimberjin.kymusicplayer.service.PlayerService;
-import com.example.kimberjin.kymusicplayer.service.PlayerServiceConnection;
-
 /**
  * Created by ky4910 on 2019/10/9
  */
 public class SplashActivity extends AppCompatActivity {
-
-    PlayerServiceConnection playerConn = new PlayerServiceConnection();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,18 +33,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private void init() {
         initView();
-        initService();
         initDatabase();
     }
 
     private void initView() {
         // do nothing
-    }
-
-    private void initService() {
-        Intent intent = new Intent(this, PlayerService.class);
-        startService(intent);
-        bindService(intent, playerConn.getConnection(), BIND_AUTO_CREATE);
     }
 
     private void initDatabase() {

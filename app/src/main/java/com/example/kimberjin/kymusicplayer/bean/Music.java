@@ -8,13 +8,14 @@ public class Music {
     private long id;
     private String title;
     private String album;
-    private String albumArt;
+    private String albumArt;    //picture
     private String artist;
     private long duration;
     private String url;
     private String lrcLink;
     private String composer;
     private String data_added;
+    private int musicType;
 
     public long getId() {
         return id;
@@ -96,8 +97,16 @@ public class Music {
         this.data_added = data_added;
     }
 
-    public Music(long id, String title, String album, String albumArt, String artist,
-                 long duration, String url, String lrcLink, String composer, String data_added) {
+    public int getMusicType() {
+        return musicType;
+    }
+
+    public void setMusicType(int musicType) {
+        this.musicType = musicType;
+    }
+
+    public Music(long id, String title, String album, String albumArt, String artist, long duration,
+                 String url, String lrcLink, String composer, String data_added, int musicType) {
         this.id = id;
         this.title = title;
         this.album = album;
@@ -108,5 +117,6 @@ public class Music {
         this.lrcLink = lrcLink;
         this.composer = composer;
         this.data_added = data_added;
+        this.musicType = musicType;
     }
 }

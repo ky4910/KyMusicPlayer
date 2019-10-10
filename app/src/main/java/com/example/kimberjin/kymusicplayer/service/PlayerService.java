@@ -2,10 +2,10 @@ package com.example.kimberjin.kymusicplayer.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.example.kimberjin.kymusicplayer.bean.Music;
 
@@ -36,7 +36,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
-        return new MusicBindImpl();
+        return new MusicBinder();
     }
 
     @Override
@@ -44,7 +44,12 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     }
 
-    private void play(Music music) {
+    public void test() {
+        Log.e(TAG, "Why always error?");
+    }
+
+    public void play(Music music) {
+        /*
         mediaPlayer.reset();
         try {
             mediaPlayer.setDataSource(music.getUrl());
@@ -68,6 +73,8 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
+        Log.e(TAG, "Call play by binder!!!");
     }
 
     public void playOrStop() {
@@ -96,7 +103,12 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         }
     }
 
-    public class MusicBindImpl extends Binder implements IPlayerService {
+    public class MusicBinder extends Binder implements IPlayerService {
+
+        public PlayerService getService() {
+            return PlayerService.this;
+        }
+
         @Override
         public void onPlay(List<Music> musicList, int position) {
             play(musicList.get(position));

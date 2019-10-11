@@ -14,7 +14,7 @@ import com.example.kimberjin.kymusicplayer.R;
  *  Created by ky4910 on 2019/09/27
  */
 
-public class HistoryFragment extends Fragment {
+public class HistoryFragment extends BaseFragment {
 
     public HistoryFragment() {
     }
@@ -29,5 +29,10 @@ public class HistoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_history_music, container, false);
         return view;
+    }
+
+    @Override
+    protected void initView(View view) {
+
     }
 }

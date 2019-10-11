@@ -7,15 +7,14 @@ public class Music {
 
     private long id;
     private String title;
-    private String album;
-    private String albumArt;    //picture
+    private String albumId;
+    private String albumImgPath;
     private String artist;
     private long duration;
     private String url;
     private String lrcLink;
     private String composer;
     private String data_added;
-    private int musicType;
 
     public long getId() {
         return id;
@@ -33,20 +32,20 @@ public class Music {
         this.title = title;
     }
 
-    public String getAlbum() {
-        return album;
+    public String getAlbumId() {
+        return albumId;
     }
 
-    public void setAlbum(String album) {
-        this.album = album;
+    public void setAlbumId(String albumId) {
+        this.albumId = albumId;
     }
 
-    public String getAlbumArt() {
-        return albumArt;
+    public String getAlbumImgPath() {
+        return albumImgPath;
     }
 
-    public void setAlbumArt(String albumArt) {
-        this.albumArt = albumArt;
+    public void setAlbumImgPath(String albumImgPath) {
+        this.albumImgPath = albumImgPath;
     }
 
     public String getArtist() {
@@ -97,26 +96,32 @@ public class Music {
         this.data_added = data_added;
     }
 
-    public int getMusicType() {
-        return musicType;
-    }
-
-    public void setMusicType(int musicType) {
-        this.musicType = musicType;
-    }
-
-    public Music(long id, String title, String album, String albumArt, String artist, long duration,
-                 String url, String lrcLink, String composer, String data_added, int musicType) {
+    public Music(long id, String title, String albumId, String albumImgPath, String artist, long duration,
+                 String url, String lrcLink, String composer, String data_added) {
         this.id = id;
         this.title = title;
-        this.album = album;
-        this.albumArt = albumArt;
+        this.albumId = albumId;
+        this.albumImgPath = albumImgPath;
         this.artist = artist;
         this.duration = duration;
         this.url = url;
         this.lrcLink = lrcLink;
         this.composer = composer;
         this.data_added = data_added;
-        this.musicType = musicType;
+    }
+
+    @Override
+    public String toString() {
+        return "Music{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", albumId='" + albumId + '\'' +
+                ", artist='" + artist + '\'' +
+                ", duration=" + duration +
+                ", url='" + url + '\'' +
+                ", lrcLink='" + lrcLink + '\'' +
+                ", composer='" + composer + '\'' +
+                ", data_added='" + data_added + '\'' +
+                '}';
     }
 }

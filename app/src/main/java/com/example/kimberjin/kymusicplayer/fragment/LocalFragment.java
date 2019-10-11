@@ -38,9 +38,9 @@ import java.util.List;
                 可行，浸入性比fragment小
  */
 
-public class LocalFragment extends Fragment {
+public class LocalFragment extends BaseFragment {
 
-    public static final String TAG = "LOCALSONG";
+    public static final String TAG = "Local_Fragment";
 
     private RecyclerView recyclerView;
     LocalMusicRvAdapter rvAdapter;
@@ -65,8 +65,15 @@ public class LocalFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i(TAG, "onCreateView called!");
         View view = inflater.inflate(R.layout.fragment_local_music, container, false);
-        localSongsList = dbClient.getLocalSongs(getContext());
+        return view;
+    }
+
+    @Override
+    protected void initView(View view) {
+        Log.i(TAG, "initView called!");
+        localSongsList = GlobalVal.getLocalMusicList();
         recyclerView = view.findViewById(R.id.rv_local_music);
         Log.e(TAG, "List size is " + localSongsList.size());
         rvAdapter = new LocalMusicRvAdapter(getContext(), localSongsList);
@@ -87,12 +94,10 @@ public class LocalFragment extends Fragment {
             public void onItemClicked(View view, int position) {
                 Toast.makeText(getContext(), localSongsList.get(position).getTitle()
                         + " selected!", Toast.LENGTH_SHORT).show();
-//                getBinder().onPlay(localSongsList, position);
-                GlobalVal.getPlayService().test();
+                // GlobalVal.getPlayService().test();
+                GlobalVal.getPlayService().play(localSongsList, position);
             }
         });
-
-        return view;
     }
 }
 

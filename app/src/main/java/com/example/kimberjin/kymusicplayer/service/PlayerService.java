@@ -7,7 +7,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.bean.Music;
+import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +50,15 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         Log.e(TAG, "Why always error?");
     }
 
+    public void play(List<Music> list, int position) {
+        music_position = position;
+        playing_progress = 0;
+        musicList = list;
+        play(list.get(position));
+    }
+
+
     public void play(Music music) {
-        /*
         mediaPlayer.reset();
         try {
             mediaPlayer.setDataSource(music.getUrl());
@@ -73,8 +82,16 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
-        Log.e(TAG, "Call play by binder!!!");
+    }
+
+    public void scanLocalMusic() {
+        musicList = GeneralUtil.getLocalMusics();
+        if (musicList != null) {
+            GlobalVal.setLocalMusicList(musicList);
+            Log.i(TAG, "Get Local Musics Done!");
+        } else {
+            Log.i(TAG, "There is no local musics");
+        }
     }
 
     public void playOrStop() {

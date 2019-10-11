@@ -1,6 +1,8 @@
 package com.example.kimberjin.kymusicplayer.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.bean.Music;
+import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
     @Override
     public LocalSongViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.local_song_item, viewGroup, false);
+                .inflate(R.layout.song_item, viewGroup, false);
         LocalSongViewHolder localViewHolder = new LocalSongViewHolder(view, mOnItemClickListener);
         return localViewHolder;
     }
@@ -52,10 +55,16 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
     @Override
     public void onBindViewHolder(@NonNull LocalSongViewHolder localSongViewHolder, int i) {
         Music music = musicList.get(i);
-        localSongViewHolder.imageView.setImageResource(R.drawable.default_music);
+        if (music.getAlbumImgPath() != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(music.getAlbumImgPath());
+            localSongViewHolder.imageView.setImageBitmap(bitmap);
+        } else {
+            localSongViewHolder.imageView.setImageResource(R.drawable.default_music);
+        }
         localSongViewHolder.textTitle.setText(music.getTitle());
         localSongViewHolder.textArtist.setText(music.getArtist());
-        localSongViewHolder.textDuration.setText("03:10");
+        String mTime = GeneralUtil.formatTime(music.getDuration());
+        localSongViewHolder.textDuration.setText(mTime);
         // localSongViewHolder.textDuration.setText(String.format());
     }
 

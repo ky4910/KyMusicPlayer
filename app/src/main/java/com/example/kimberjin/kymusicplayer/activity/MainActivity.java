@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.FragmentAdapter;
@@ -33,7 +34,9 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private MyViewPagerAdapter pagerAdapter;
+    protected MyViewPagerAdapter pagerAdapter;
+
+    TextView tvTitle, tvArtist;
 
     public static final String TAG = "Main_Activity";
 
@@ -42,21 +45,27 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE" };
 
-    private String mTitles[] = {"本地音乐", "网络音乐", "播放历史"};
+    protected String mTitles[] = {"本地音乐", "网络音乐", "播放历史"};
+
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getAuthentication();
-        initService();
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
+
+        tvTitle = findViewById(R.id.tv_music_name);
+        tvArtist = findViewById(R.id.tv_music_author);
 
         LocalFragment localFragment = new LocalFragment();
         OnlineFragment onlineFragment = new OnlineFragment();
@@ -88,27 +97,6 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
             }
         });
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-    PlayerServiceConnection playConn = new PlayerServiceConnection();
-    public class PlayerServiceConnection implements ServiceConnection {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            PlayerService playerService = ((PlayerService.MusicBinder) iBinder).getService();
-            GlobalVal.setPlayService(playerService);
-            Log.e(TAG, "Service is connected!");
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-            Log.e(TAG, "onServiceDisconnected name: " + componentName);
-        }
-    }
-
-    private void initService() {
-        Intent intent = new Intent(MainActivity.this, PlayerService.class);
-        startService(intent);
-        bindService(intent, playConn, BIND_AUTO_CREATE);
     }
 
     @Override
@@ -145,5 +133,15 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    private void setBottomPlayBar() {
+        if (GlobalVal.getPlayService() == null)
+            return;
     }
 }

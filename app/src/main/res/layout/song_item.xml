@@ -14,20 +14,21 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/local_iView">
+        android:layout_toEndOf="@id/local_iView"
+        android:layout_marginStart="15dp">
 
         <TextView
             android:id="@+id/local_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Music Title"/>
+            android:text="@string/unknown_music_name"/>
 
         <TextView
             android:id="@+id/local_tv_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/local_tv_title"
-            android:text="The Artist"/>
+            android:text="@string/unknown_music_artist"/>
 
         <TextView
             android:id="@+id/local_tv_duration"
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:text="03:58"/>
+            android:text="@string/unknown_duration"/>
 
     </RelativeLayout>
 

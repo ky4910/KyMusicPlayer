@@ -44,9 +44,9 @@ public class DbClient {
                         String composer = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.COMPOSER));
                         String date_added = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED));
                         Log.e(TAG, title + " " + album + " " + artist + " " + duration + " " + composer + " " + date_added);
-                        music = new Music(0, title, album, null, artist, duration,
-                                null, null, composer, date_added, 0);
-                        localSongsList.add(music);
+//                        music = new Music(0, title, album, null, artist, duration,
+//                                null, null, composer, date_added, 0);
+//                        localSongsList.add(music);
                     }
                     cursor.close();
                 }

@@ -21,7 +21,7 @@ import com.example.kimberjin.kymusicplayer.R;
  *  Created by ky4910 on 2019/09/27
  */
 
-public class OnlineFragment extends Fragment {
+public class OnlineFragment extends BaseFragment {
 
     public static final String TAG = "ONLINESONG";
 
@@ -38,5 +38,10 @@ public class OnlineFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_online_music, container, false);
         return view;
+    }
+
+    @Override
+    protected void initView(View view) {
+
     }
 }

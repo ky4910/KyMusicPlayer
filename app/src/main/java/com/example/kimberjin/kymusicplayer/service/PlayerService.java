@@ -79,6 +79,10 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
                     complete();
                 }
             });
+
+            GlobalVal.setIsPlaying(true);
+            GlobalVal.setPlayingMusic(music);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

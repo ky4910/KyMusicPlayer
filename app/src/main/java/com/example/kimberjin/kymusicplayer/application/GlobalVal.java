@@ -18,7 +18,9 @@ public class GlobalVal {
     private static Context mContext;
     private PlayerService mPlayerService;
     private PlayerService.MusicBinder mBinder;
+    private static Music mPlayingMusic;
     private List<Music> localMusicList = new ArrayList<>();
+    private static boolean isPlaying = false;
 
     private GlobalVal() {}
 
@@ -45,17 +47,27 @@ public class GlobalVal {
         return getInstance().mPlayerService;
     }
 
+    public static void setIsPlaying(boolean state) {
+        isPlaying = state;
+    }
+
+    public static void setPlayingMusic(Music music) {
+        mPlayingMusic = music;
+    }
+
+    public static Music getPlayingMusic() {
+        if (mPlayingMusic == null && getInstance().localMusicList.size() > 0) {
+            mPlayingMusic = getInstance().localMusicList.get(0);
+        }
+        return mPlayingMusic;
+    }
+
     public static void setLocalMusicList(List<Music> musicList) {
         getInstance().localMusicList = musicList;
     }
 
     public static List<Music> getLocalMusicList() {
         return getInstance().localMusicList;
-    }
-
-    public static Music getPlayingMusic() {
-
-        return null;
     }
 
     public static void clearAll() {

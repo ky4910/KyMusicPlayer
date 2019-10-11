@@ -95,6 +95,9 @@ public class LocalFragment extends BaseFragment {
                 Toast.makeText(getContext(), localSongsList.get(position).getTitle()
                         + " selected!", Toast.LENGTH_SHORT).show();
                 // GlobalVal.getPlayService().test();
+                // Fragment调用PlayerService的play()方法，play()中回调OnPlayMusicListener接口的
+                // onMusicPlay()，onMusicPlay()由MainActiviti继承OnPlayMusicListener后实现，
+                // 并在onMusicPlay()中实现Bottom PlayBar UI更新操作
                 GlobalVal.getPlayService().play(localSongsList, position);
             }
         });

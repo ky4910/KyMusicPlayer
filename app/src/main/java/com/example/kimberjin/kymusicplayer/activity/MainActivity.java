@@ -12,8 +12,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.FragmentAdapter;
 import com.example.kimberjin.kymusicplayer.adapter.MyViewPagerAdapter;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
     protected MyViewPagerAdapter pagerAdapter;
 
     TextView tvTitle, tvArtist;
+    ImageView imgView;
 
     public static final String TAG = "Main_Activity";
 
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
 
         tvTitle = findViewById(R.id.tv_music_name);
         tvArtist = findViewById(R.id.tv_music_author);
+        imgView = findViewById(R.id.img_music_bottom);
 
         LocalFragment localFragment = new LocalFragment();
         OnlineFragment onlineFragment = new OnlineFragment();
@@ -143,5 +147,9 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
     private void setBottomPlayBar() {
         if (GlobalVal.getPlayService() == null)
             return;
+        tvTitle.setText(GlobalVal.getPlayingMusic().getTitle());
+        tvArtist.setText(GlobalVal.getPlayingMusic().getArtist());
+        String imgPath = GlobalVal.getPlayingMusic().getAlbumImgPath();
+        Glide.with(this).load(imgPath).placeholder(R.drawable.default_music).into(imgView);
     }
 }

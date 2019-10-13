@@ -1,10 +1,6 @@
 package com.example.kimberjin.kymusicplayer.activity;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.os.IBinder;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -23,7 +19,6 @@ import com.example.kimberjin.kymusicplayer.fragment.HistoryFragment;
 import com.example.kimberjin.kymusicplayer.fragment.LocalFragment;
 import com.example.kimberjin.kymusicplayer.fragment.OnlineFragment;
 import com.example.kimberjin.kymusicplayer.service.OnPlayMusicListener;
-import com.example.kimberjin.kymusicplayer.service.PlayerService;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 
 /**
@@ -32,7 +27,7 @@ import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 
 // 可依音乐播放器
 
-public class MainActivity extends AppCompatActivity implements OnPlayMusicListener {
+public class MainActivity extends BaseActivity implements OnPlayMusicListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -43,22 +38,12 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
 
     public static final String TAG = "Main_Activity";
 
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            "android.permission.READ_EXTERNAL_STORAGE",
-            "android.permission.WRITE_EXTERNAL_STORAGE" };
-
     protected String mTitles[] = {"本地音乐", "网络音乐", "播放历史"};
-
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getAuthentication();
         initView();
     }
 
@@ -115,28 +100,12 @@ public class MainActivity extends AppCompatActivity implements OnPlayMusicListen
 
     @Override
     public void onMusicStop() {
-
+        Log.e(TAG, "onMusicStop function from MainActivity!");
     }
 
     @Override
     public void onMusicComplete() {
 
-    }
-
-    private void getAuthentication() {
-        try {
-            //检测是否有写的权限
-            int permission = ContextCompat.checkSelfPermission(MainActivity.this,
-                    "android.permission.READ_EXTERNAL_STORAGE");
-            // Manifest.permission.WRITE_EXTERNAL_STORAGE
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                // 没有写的权限，去申请写的权限，会弹出对话框
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

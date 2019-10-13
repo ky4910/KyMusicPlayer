@@ -26,6 +26,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     private int music_position = 0;
 
     private List<Music> musicList = new ArrayList<>();
+    private OnPlayMusicListener mPlayerServiceListener;
 
     public PlayerService() {
     }
@@ -57,7 +58,13 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         play(list.get(position));
     }
 
-
+    /*
+         MediaPlayer音频播放一般过程：初始化MediaPlayer - 加载媒体源 - 准备 - 开始播放
+            1. MediaPlayer mediaPlayer = new MediaPlayer();
+            2. mediaPlayer.setDataSource("PATH");
+            3. mediaPlayer.prepare();
+            4. mediaPlayer.start();
+    */
     public void play(Music music) {
         mediaPlayer.reset();
         try {
@@ -82,6 +89,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
             GlobalVal.setIsPlaying(true);
             GlobalVal.setPlayingMusic(music);
+            //mPlayerServiceListener.onMusicPlay();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,6 +130,10 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         if (mediaPlayer != null) {
             mediaPlayer.stop();
         }
+    }
+
+    public void setOnPlayerListener(OnPlayMusicListener listener) {
+        mPlayerServiceListener = listener;
     }
 
     public class MusicBinder extends Binder implements IPlayerService {

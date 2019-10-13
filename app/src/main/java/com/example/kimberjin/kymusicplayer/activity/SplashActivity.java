@@ -17,13 +17,9 @@ import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 /**
  * Created by ky4910 on 2019/10/9
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     public static final String TAG = "Splash_Activity";
-
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,14 +43,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
-        initView();
         initDatabase();
         GeneralUtil.init(this);
         initService();
-    }
-
-    protected void initView() {
-        // do nothing
     }
 
     private void initDatabase() {
@@ -73,7 +64,11 @@ public class SplashActivity extends AppCompatActivity {
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             PlayerService playerService = ((PlayerService.MusicBinder) iBinder).getService();
             GlobalVal.setPlayService(playerService);
-            playerService.scanLocalMusic();
+            try {
+                playerService.scanLocalMusic();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             Log.e(TAG, "Service is connected!");
         }
 

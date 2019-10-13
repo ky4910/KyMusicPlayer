@@ -89,7 +89,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
             GlobalVal.setIsPlaying(true);
             GlobalVal.setPlayingMusic(music);
-            //mPlayerServiceListener.onMusicPlay();
+            mPlayerServiceListener.onMusicPlay();
 
         } catch (IOException e) {
             e.printStackTrace();

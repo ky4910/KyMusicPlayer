@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener {
     }
 
     protected void initView() {
+        getPlayService().setOnPlayerListener(this);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -90,7 +91,8 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener {
 
     @Override
     public void onMusicPlay() {
-
+        setBottomPlayBar();
+        imgView.setImageResource(R.drawable.default_playing);
     }
 
     @Override

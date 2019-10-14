@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener {
 
     TextView tvTitle, tvArtist;
     ImageView imgView;
+    ImageButton img_play, img_next;
 
     public static final String TAG = "Main_Activity";
 
@@ -56,6 +58,9 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener {
         tvTitle = findViewById(R.id.tv_music_name);
         tvArtist = findViewById(R.id.tv_music_author);
         imgView = findViewById(R.id.img_music_bottom);
+
+        img_play = findViewById(R.id.imgBtn_play);
+        img_next = findViewById(R.id.imgBtn_next);
 
         LocalFragment localFragment = new LocalFragment();
         OnlineFragment onlineFragment = new OnlineFragment();
@@ -92,7 +97,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener {
     @Override
     public void onMusicPlay() {
         setBottomPlayBar();
-        imgView.setImageResource(R.drawable.default_playing);
+        img_play.setImageResource(R.drawable.default_playing);
     }
 
     @Override

@@ -16,7 +16,7 @@
 
         <activity
             android:name=".activity.SplashActivity"
-            android:icon="@drawable/app_icon"
+            android:icon="@drawable/app_icon_2"
             android:theme="@style/StartTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

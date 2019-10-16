@@ -110,17 +110,33 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         if (mediaPlayer.isPlaying()){
             stop();
         }else {
-            //onPlay();
+            play(musicList.get(music_position));
         }
     }
 
     private void stop() {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            GlobalVal.setIsPlaying(false);
+            mPlayerServiceListener.onMusicStop();
 
+        }
     }
 
-    private void playNext() {
-
+    public void playNext() {
+        playing_progress = 0;
+        if (musicList == null) {
+            musicList = GeneralUtil.getLocalMusics();
+        }
+        if (music_position == musicList.size() - 1) {
+            music_position = 0;
+        } else {
+            music_position++;
+        }
+        play(musicList.get(music_position));
     }
+
+
 
     private void playPrev() {
 

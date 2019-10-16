@@ -67,7 +67,6 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:src="@drawable/default_stop"
-            android:layout_toStartOf="@+id/imgBtn_next"
             android:contentDescription="@string/image_description"/>
 
         <ImageButton

@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +29,7 @@ import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 
 // 可依音乐播放器
 
-public class MainActivity extends BaseActivity implements OnPlayMusicListener {
+public class MainActivity extends BaseActivity implements OnPlayMusicListener, View.OnClickListener {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -92,6 +93,27 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener {
             }
         });
         tabLayout.setupWithViewPager(viewPager);
+
+        setListener();
+    }
+
+    public void setListener() {
+        img_play.setOnClickListener(this);
+        img_next.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imgBtn_play:
+                Log.e(TAG, "play button clicked!");
+                getPlayService().playOrStop();
+                break;
+            case R.id.imgBtn_next:
+                Log.e(TAG, "next button clicked!");
+                getPlayService().playNext();
+                break;
+        }
     }
 
     @Override
@@ -108,6 +130,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener {
     @Override
     public void onMusicStop() {
         Log.e(TAG, "onMusicStop function from MainActivity!");
+        img_play.setImageResource(R.drawable.default_stop);
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     TextView tvTitle, tvArtist;
     ImageView imgView;
     ImageButton img_play, img_next;
+    SeekBar mSeekBarCurrent;
 
     public static final String TAG = "Main_Activity";
 
@@ -62,6 +64,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
 
         img_play = findViewById(R.id.imgBtn_play);
         img_next = findViewById(R.id.imgBtn_next);
+        mSeekBarCurrent = findViewById(R.id.play_progress_seekbar);
 
         LocalFragment localFragment = new LocalFragment();
         OnlineFragment onlineFragment = new OnlineFragment();
@@ -100,6 +103,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     public void setListener() {
         img_play.setOnClickListener(this);
         img_next.setOnClickListener(this);
+        mSeekBarCurrent.setOnClickListener(this);
     }
 
     @Override
@@ -124,7 +128,9 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
 
     @Override
     public void onMusicCurrentPosition(int currentPosition) {
-
+        int tmpValue = currentPosition;
+        int progress = tmpValue * 100 / (int)GlobalVal.getPlayingMusic().getDuration();
+        mSeekBarCurrent.setProgress(progress);
     }
 
     @Override

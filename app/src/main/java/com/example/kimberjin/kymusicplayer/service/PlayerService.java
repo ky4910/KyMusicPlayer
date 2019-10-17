@@ -4,7 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.util.Log;
 
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
@@ -30,6 +32,22 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     public PlayerService() {
     }
+
+    private Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            switch (message.what) {
+                // update current music progress
+                case 1:
+                    if (mediaPlayer != null) {
+                        playing_progress = mediaPlayer.getCurrentPosition();
+                        mPlayerServiceListener.onMusicCurrentPosition(playing_progress);
+                        handler.sendEmptyMessageDelayed(1, 50);
+                    }
+            }
+            return false;
+        }
+    });
 
     @Override
     public void onCreate() {
@@ -90,7 +108,8 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
             GlobalVal.setIsPlaying(true);
             GlobalVal.setPlayingMusic(music);
             mPlayerServiceListener.onMusicPlay();
-
+            // TODO: write history data to Database
+            handler.sendEmptyMessage(1);
         } catch (IOException e) {
             e.printStackTrace();
         }

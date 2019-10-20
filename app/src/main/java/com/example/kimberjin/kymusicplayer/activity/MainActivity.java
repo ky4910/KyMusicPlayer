@@ -110,12 +110,16 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imgBtn_play:
-                Log.e(TAG, "play button clicked!");
+                Log.i(TAG, "play button clicked!");
                 getPlayService().playOrStop();
                 break;
             case R.id.imgBtn_next:
-                Log.e(TAG, "next button clicked!");
+                Log.i(TAG, "next button clicked!");
                 getPlayService().playNext();
+                break;
+            case R.id.img_music_bottom:
+                Log.i(TAG, "music icon clicked!");
+                showDetailsFragment();
                 break;
         }
     }
@@ -156,5 +160,9 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
         tvArtist.setText(GlobalVal.getPlayingMusic().getArtist());
         String imgPath = GlobalVal.getPlayingMusic().getAlbumImgPath();
         Glide.with(this).load(imgPath).placeholder(R.drawable.default_music).into(imgView);
+    }
+
+    private void showDetailsFragment() {
+
     }
 }

@@ -3,6 +3,7 @@ package com.example.kimberjin.kymusicplayer.activity;
 import android.content.pm.PackageManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.FragmentAdapter;
 import com.example.kimberjin.kymusicplayer.adapter.MyViewPagerAdapter;
+import com.example.kimberjin.kymusicplayer.fragment.DetailsFragment;
 import com.example.kimberjin.kymusicplayer.fragment.HistoryFragment;
 import com.example.kimberjin.kymusicplayer.fragment.LocalFragment;
 import com.example.kimberjin.kymusicplayer.fragment.OnlineFragment;
@@ -40,6 +42,11 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     ImageView imgView;
     ImageButton img_play, img_next;
     SeekBar mSeekBarCurrent;
+
+    private DetailsFragment detailsFragment;
+
+    boolean isShowingFragment = false;
+    boolean isShowedFragment = false;
 
     public static final String TAG = "Main_Activity";
 
@@ -103,6 +110,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     public void setListener() {
         img_play.setOnClickListener(this);
         img_next.setOnClickListener(this);
+        imgView.setOnClickListener(this);
         mSeekBarCurrent.setOnClickListener(this);
     }
 
@@ -163,6 +171,23 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     }
 
     private void showDetailsFragment() {
+        if (isShowingFragment) {
+            Log.i(TAG, "Detail Fragment is showing! Return!");
+            return;
+        }
 
+        Log.i(TAG, "begin show details fragment!");
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_up, 0);
+        if (detailsFragment == null) {
+            detailsFragment = new DetailsFragment();
+            fragmentTransaction.replace(android.R.id.content, detailsFragment);
+        } else {
+            fragmentTransaction.show(detailsFragment);
+        }
+        fragmentTransaction.commitNow();
+
+        isShowingFragment = true;
+        isShowedFragment = true;
     }
 }

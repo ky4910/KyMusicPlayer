@@ -3,6 +3,7 @@ package com.example.kimberjin.kymusicplayer.activity;
 import android.content.pm.PackageManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -189,5 +190,12 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
 
         isShowingFragment = true;
         isShowedFragment = true;
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                detailsFragment.updateInfo();
+            }
+        }, 500);
     }
 }

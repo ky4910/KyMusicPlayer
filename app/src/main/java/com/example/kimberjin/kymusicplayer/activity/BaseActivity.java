@@ -5,8 +5,11 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,6 +22,8 @@ import com.example.kimberjin.kymusicplayer.service.PlayerService;
  * Created by ky4910 on 2019/10/11
  */
 public abstract class BaseActivity extends AppCompatActivity {
+
+    protected Handler mHandler = new Handler(Looper.getMainLooper());
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {

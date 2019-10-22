@@ -20,14 +20,15 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/action_selector"
             android:scaleType="centerInside"
-            android:src="@drawable/more_unfold"/>
+            android:contentDescription="@string/image_description"
+            android:src="@drawable/detail_dropdown2" />
         <TextView
             android:id="@+id/detail_tv_music_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/detail_img_down"
             android:layout_marginStart="10dp"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:text="@string/default_music_name"/>
         <TextView
             android:id="@+id/detail_tv_music_author"

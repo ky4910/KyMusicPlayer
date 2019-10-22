@@ -25,6 +25,7 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
+        // 监听touch事件，重写View.OnTouchListener的OnTouch方法(需return true)。解决fragment点击穿透事件
         view.setOnTouchListener(this);
         return view;
     }
@@ -57,7 +58,7 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         view.performClick();
-        return false;
+        return true;
     }
 
 }

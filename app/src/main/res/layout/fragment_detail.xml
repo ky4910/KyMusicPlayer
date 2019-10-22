@@ -106,20 +106,23 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/play_prev_selector"/>
+                android:src="@drawable/play_prev_selector"
+                android:contentDescription="@string/image_description"/>
             <ImageView
                 android:id="@+id/fg_bottom_play"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:src="@drawable/play_stop_selector"/>
+                android:src="@drawable/play_stop_selector"
+                android:contentDescription="@string/image_description"/>
             <ImageView
                 android:id="@+id/fg_bottom_next"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/play_next_selector"/>
+                android:src="@drawable/play_next_selector"
+                android:contentDescription="@string/image_description"/>
         </LinearLayout>
 
     </RelativeLayout>

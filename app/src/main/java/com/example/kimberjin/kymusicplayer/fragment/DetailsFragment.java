@@ -1,5 +1,6 @@
 package com.example.kimberjin.kymusicplayer.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -53,10 +54,10 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
         tvAuthor = view.findViewById(R.id.detail_tv_music_author);
         sbProgress = view.findViewById(R.id.detail_bottom_seekBar);
         tvCurrent = view.findViewById(R.id.detail_tv_time_current);
-        tvDuration = view.findViewById(R.id.local_tv_duration);
-        imgPre = view.findViewById(R.id.fg_bottom_prev);
-        imgPlay = view.findViewById(R.id.fg_bottom_play);
-        imgNext = view.findViewById(R.id.fg_bottom_next);
+        tvDuration = view.findViewById(R.id.detail_tv_duration);
+        imgPre = view.findViewById(R.id.dg_bottom_prev);
+        imgPlay = view.findViewById(R.id.dg_bottom_play);
+        imgNext = view.findViewById(R.id.dg_bottom_next);
         setDetailListener();
     }
 
@@ -72,8 +73,14 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.detail_img_down:
-                getActivity().onBackPressed();
+                mActivity.onBackPressed();
                 break;
+            case R.id.dg_bottom_prev:
+                getPlayerService().onPlayPrev();
+            case R.id.dg_bottom_play:
+                getPlayerService().onPlay();
+            case R.id.dg_bottom_next:
+                getPlayerService().onPlayNext();
         }
     }
 
@@ -103,12 +110,4 @@ public class DetailsFragment extends BaseFragment implements View.OnClickListene
         view.performClick();
         return true;
     }
-
-    protected PlayerService getPlayerService(){
-        if (GlobalVal.getPlayService() == null){
-            throw new NullPointerException("BaseFragment PlayerService is null");
-        }
-        return GlobalVal.getPlayService();
-    }
-
 }

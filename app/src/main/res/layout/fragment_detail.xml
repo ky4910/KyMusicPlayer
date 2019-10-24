@@ -71,6 +71,7 @@
             android:paddingLeft="10dp">
 
             <TextView
+                android:id="@+id/detail_tv_time_current"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -87,7 +88,7 @@
                 android:progressDrawable="@drawable/seek_bar_progress_style"
                 android:thumb="@mipmap/ic_seek_bar_thumb"/>
             <TextView
-                android:id="@+id/detail_tv_time_current"
+                android:id="@+id/detail_tv_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
@@ -103,14 +104,14 @@
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true">
             <ImageView
-                android:id="@+id/fg_bottom_prev"
+                android:id="@+id/dg_bottom_prev"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="5dp"
                 android:src="@drawable/play_prev_selector"
                 android:contentDescription="@string/image_description"/>
             <ImageView
-                android:id="@+id/fg_bottom_play"
+                android:id="@+id/dg_bottom_play"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginLeft="15dp"
@@ -118,7 +119,7 @@
                 android:src="@drawable/play_stop_selector"
                 android:contentDescription="@string/image_description"/>
             <ImageView
-                android:id="@+id/fg_bottom_next"
+                android:id="@+id/dg_bottom_next"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="5dp"

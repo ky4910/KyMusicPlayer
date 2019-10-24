@@ -19,7 +19,7 @@ import java.util.List;
 
 // https://www.cnblogs.com/io1024/p/11568507.html
 
-public class PlayerService extends Service implements MediaPlayer.OnCompletionListener {
+public class PlayerService extends Service implements MediaPlayer.OnCompletionListener, IPlayerService {
 
     public static final String TAG = "PlayerService";
     private MediaPlayer mediaPlayer = new MediaPlayer();
@@ -142,25 +142,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         }
     }
 
-    public void playNext() {
-        playing_progress = 0;
-        if (musicList == null) {
-            musicList = GeneralUtil.getLocalMusics();
-        }
-        if (music_position == musicList.size() - 1) {
-            music_position = 0;
-        } else {
-            music_position++;
-        }
-        play(musicList.get(music_position));
-    }
-
-
-
-    private void playPrev() {
-
-    }
-
     private void complete() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -171,30 +152,38 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         mPlayerServiceListener = listener;
     }
 
-    public class MusicBinder extends Binder implements IPlayerService {
+    @Override
+    public void onPlay() {
+        play(musicList.get(music_position));
+    }
 
+    @Override
+    public void onStop() {
+
+    }
+
+    @Override
+    public void onPlayNext() {
+        playing_progress = 0;
+        if (musicList == null) {
+            musicList = GeneralUtil.getLocalMusics();
+        }
+        if (music_position == musicList.size() - 1) {
+            music_position = 0;
+        } else {
+            music_position++;
+        }
+        onPlay();
+    }
+
+    @Override
+    public void onPlayPrev() {
+
+    }
+
+    public class MusicBinder extends Binder {
         public PlayerService getService() {
             return PlayerService.this;
-        }
-
-        @Override
-        public void onPlay(List<Music> musicList, int position) {
-            play(musicList.get(position));
-        }
-
-        @Override
-        public void onStop() {
-            stop();
-        }
-
-        @Override
-        public void onPlayNext() {
-            playNext();
-        }
-
-        @Override
-        public void onPlayPrev() {
-            playPrev();
         }
     }
 }

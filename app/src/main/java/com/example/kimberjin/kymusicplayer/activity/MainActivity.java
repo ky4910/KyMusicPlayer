@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
                 break;
             case R.id.imgBtn_next:
                 Log.i(TAG, "next button clicked!");
-                getPlayService().playNext();
+                getPlayService().onPlayNext();
                 break;
             case R.id.img_music_bottom:
                 Log.i(TAG, "music icon clicked!");

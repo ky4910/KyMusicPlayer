@@ -1,6 +1,7 @@
 package com.example.kimberjin.kymusicplayer.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,5 +31,11 @@ public abstract class BaseFragment extends Fragment {
             throw new NullPointerException("BaseFragment PlayerService is null");
         }
         return GlobalVal.getPlayService();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity)context;
     }
 }

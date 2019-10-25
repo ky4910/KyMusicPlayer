@@ -65,10 +65,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     }
 
-    public void test() {
-        Log.e(TAG, "Why always error?");
-    }
-
     public void play(List<Music> list, int position) {
         music_position = position;
         playing_progress = 0;
@@ -178,7 +174,16 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     @Override
     public void onPlayPrev() {
-
+        playing_progress = 0;
+        if (musicList == null) {
+            musicList = GeneralUtil.getLocalMusics();
+        }
+        if (music_position == 0) {
+            music_position = musicList.size() - 1;
+        } else {
+            music_position--;
+        }
+        onPlay();
     }
 
     public class MusicBinder extends Binder {

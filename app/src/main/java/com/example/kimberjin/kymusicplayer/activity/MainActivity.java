@@ -1,5 +1,6 @@
 package com.example.kimberjin.kymusicplayer.activity;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -128,7 +129,8 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
                 break;
             case R.id.img_music_bottom:
                 Log.i(TAG, "music icon clicked!");
-                showDetailsFragment();
+                // showDetailsFragment();
+                startActivity(new Intent(this, DetailsActivity.class));
                 break;
         }
     }
@@ -171,6 +173,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
         Glide.with(this).load(imgPath).placeholder(R.drawable.default_music).into(imgView);
     }
 
+    /* Do not use fragemnt for detail part, and use activity instead. */
     private void showDetailsFragment() {
         if (isShowingFragment) {
             Log.i(TAG, "Detail Fragment is showing! Return!");
@@ -198,4 +201,5 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
             }
         }, 500);
     }
+
 }

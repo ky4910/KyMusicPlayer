@@ -27,6 +27,8 @@
 
         <activity android:name=".activity.MainActivity"> </activity>
 
+        <activity android:name=".activity.DetailsActivity" />
+
         <service
             android:name=".service.PlayerService"
             android:enabled="true"

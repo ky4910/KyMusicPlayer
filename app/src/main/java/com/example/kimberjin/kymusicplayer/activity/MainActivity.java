@@ -1,14 +1,9 @@
 package com.example.kimberjin.kymusicplayer.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -182,7 +177,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
 
         Log.i(TAG, "begin show details fragment!");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(R.anim.fragment_slide_up, 0);
+        fragmentTransaction.setCustomAnimations(R.anim.activity_slide_up, 0);
         if (detailsFragment == null) {
             detailsFragment = new DetailsFragment();
             fragmentTransaction.replace(android.R.id.content, detailsFragment);

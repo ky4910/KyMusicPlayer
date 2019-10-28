@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--duration: 动画运行时间，定义在多次时间（ms）内完成动画-->
+    <!--startOffset: 延迟一定时间后运行动画-->
+    <!--fromXDelta:  X轴方向开始位置，可以是%，也可以是具体的像素 具体见图-->
+    <!--toXDelta:    X轴方向结束位置，可以是%，也可以是具体的像素-->
+    <!--fromYDelta:  Y轴方向开始位置，可以是%，也可以是具体的像素-->
+    <!--toYDelta:    Y轴方向结束位置，可以是%，也可以是具体的像素-->
+
+    <translate
+        android:duration="400"
+        android:fromYDelta="100%p"
+        android:toYDelta="0" />
+
+</set>

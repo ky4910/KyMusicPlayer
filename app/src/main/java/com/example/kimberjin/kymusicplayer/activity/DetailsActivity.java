@@ -1,5 +1,7 @@
 package com.example.kimberjin.kymusicplayer.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
+import com.example.kimberjin.kymusicplayer.ui.AlbumView;
 
 /**
  * Created by ky4910 on 2019/10/27 18:38
@@ -23,6 +26,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     ImageButton play_pre_music;
     ImageButton play_current_music;
     ImageButton play_next_music;
+    AlbumView albumView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,10 +45,13 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         play_pre_music = findViewById(R.id.detail_play_pre);
         play_current_music = findViewById(R.id.detail_play_start);
         play_next_music = findViewById(R.id.detail_play_next);
+        albumView = findViewById(R.id.album_view);
     }
 
     private void initUi() {
         // init detail activity UI
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon_2);
+        albumView.setImage(bmp);
     }
 
     private void setClickListener() {

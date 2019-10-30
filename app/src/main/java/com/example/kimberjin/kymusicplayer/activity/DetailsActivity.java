@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.ui.AlbumView;
+import com.example.kimberjin.kymusicplayer.util.ImageTools;
 
 /**
  * Created by ky4910 on 2019/10/27 18:38
@@ -51,7 +52,14 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private void initUi() {
         // init detail activity UI
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon_2);
-        albumView.setImage(bmp);
+        albumView.setImage(ImageTools.scaleBitmap(bmp));
+        if (GlobalVal.getPlayService().isPlaying()) {
+            albumView.start();
+            play_current_music.setImageResource(R.drawable.player_btn_pause_normal);
+        } else {
+            albumView.pause();
+            play_current_music.setImageResource(R.drawable.player_btn_play_normal);
+        }
     }
 
     private void setClickListener() {

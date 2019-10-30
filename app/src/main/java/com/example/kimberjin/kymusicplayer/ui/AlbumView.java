@@ -94,6 +94,12 @@ public class AlbumView extends View {
         setMeasuredDimension(width, height);
     }
 
+    /*
+        save()和restore()方法分别是保存和恢复Canvas状态的，都没有参数
+        save():用来保存Canvas的状态。save之后，可以调用Canvas的平移、放缩、旋转、错切、裁剪等操作。
+        restore():用来恢复Canvas之前保存的状态。防止save后对Canvas执行的操作对后续的绘制有影响。
+        save和restore要配对使用，restore可以比save少，但不能多。Otherwise Error...
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         if (mClipBitmap == null)
@@ -106,11 +112,18 @@ public class AlbumView extends View {
         canvas.restore();
     }
 
+    /*
+        getMeasuredWidth()获取的是view原始的大小，也就是这个view在XML文件中配置或者是代码中设置的大小。
+        getWidth（）获取的是这个view最终显示的大小，这个大小有可能等于原始的大小也有可能不等于原始大小。
+     */
     // 创建圆形剪切图
     private Bitmap createCircleBitmap(Bitmap src) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setARGB(255, 241, 239, 229);
 
+        /*
+            创建一个getMeasuredWidth()*getMeasuredHeight()大小的Bitmap，使用它作为Canvas的操作对象
+         */
         Bitmap target = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(target);
@@ -163,6 +176,7 @@ public class AlbumView extends View {
 
                 mRotation += 0.1f;
                 if(mRotation >= 360) mRotation = 0;
+                // 调用invalidate(), 会触发onDraw()和computeScroll()
                 invalidate();
                 mHandler.sendEmptyMessageDelayed(MSG_RUN, TIME_UPDATE);
             }

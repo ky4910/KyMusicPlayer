@@ -34,23 +34,13 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/detail_vp_play_container"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dip"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--android:overScrollMode="never" />-->
-
-    <RelativeLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/detail_vp_play_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.example.kimberjin.kymusicplayer.ui.AlbumView
-            android:id="@+id/album_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
-    </RelativeLayout>
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:overScrollMode="never" />
 
     <LinearLayout
         android:layout_width="match_parent"

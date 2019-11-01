@@ -11,6 +11,7 @@ import android.graphics.PorterDuffXfermode;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.example.kimberjin.kymusicplayer.R;
@@ -19,6 +20,8 @@ import com.example.kimberjin.kymusicplayer.R;
  * Created by ky4910 on 2019/10/29
  */
 public class AlbumView extends View {
+
+    public static final String TAG = "Album_View";
 
     private static final int MSG_RUN = 0x00000100;
     private static final int TIME_UPDATE = 50;
@@ -32,12 +35,12 @@ public class AlbumView extends View {
 
     private volatile boolean isRunning;
 
-    public AlbumView(Context context) {
-        super(context);
+    public AlbumView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public AlbumView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+    public AlbumView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         mCircleBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.cd_center);
         mMatrix = new Matrix();
     }
@@ -48,6 +51,15 @@ public class AlbumView extends View {
         isRunning = false;
     }
 
+    /* 先于onDraw方法执行 */
+
+    /*
+        MeasureSpec封装了父布局传递给子布局的布局要求，每个MeasureSpec代表了一组宽度和高度的要求。
+        MeasureSpec由大小和模式组成，它有三种模式：
+            UNSPECIFIED(未指定),父元素部队自元素施加任何束缚，子元素可以得到任意想要的大小；
+            EXACTLY(完全)，父元素决定自元素的确切大小，子元素将被限定在给定的边界里而忽略它本身大小；
+            AT_MOST(至多)，子元素至多达到指定大小的值。
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (mClipBitmap == null){
@@ -66,8 +78,8 @@ public class AlbumView extends View {
         /*
             测量模式	            表示意思
            UNSPECIFIED	父容器没有对当前View有任何限制，当前View可以任意取尺寸
-            EXACTLY	    当前的尺寸就是当前View应该取的尺寸
-            AT_MOST	    当前尺寸是当前View能取的最大尺寸
+            EXACTLY	    当前的尺寸就是当前View应该取的尺寸 (match_parent)
+            AT_MOST	    当前尺寸是当前View能取的最大尺寸 (wrap_content)
          */
 
         // parent assign the size
@@ -91,6 +103,7 @@ public class AlbumView extends View {
             }
         }
 
+        Log.e(TAG, "setMeasuredDimension: " + width + ", " + height);
         setMeasuredDimension(width, height);
     }
 
@@ -144,9 +157,13 @@ public class AlbumView extends View {
         int widthSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.AT_MOST);
         int heightSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.AT_MOST);
 
+        Log.e(TAG, "widthSize:" + widthSize + " heightSize:" + heightSize
+            + " widthSpec:" + widthSpec + " heightSpec:" + heightSpec);
+
         measure(widthSpec, heightSpec);
 
         mClipBitmap = createCircleBitmap(bmp);
+        Log.e(TAG, "width:" + bmp.getWidth() + " height:" + bmp.getHeight());
         requestLayout();
         invalidate();
     }

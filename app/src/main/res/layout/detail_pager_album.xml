@@ -27,7 +27,10 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textColor="@color/white"
-        android:text="@string/default_music_duration"/>
+        android:text="@string/default_music_duration"
+        android:layout_below="@+id/detail_album_view"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
 

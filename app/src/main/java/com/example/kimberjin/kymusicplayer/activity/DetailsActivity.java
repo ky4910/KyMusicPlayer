@@ -7,13 +7,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.DetailsVpAdapter;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
+import com.example.kimberjin.kymusicplayer.application.MusicApplication;
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.ui.AlbumView;
 import com.example.kimberjin.kymusicplayer.util.ImageTools;
@@ -29,6 +32,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
     ImageView img_drop_down;
     TextView tv_detail_music_title;
+    SeekBar seekBar;
     ImageButton play_pre_music;
     ImageButton play_current_music;
     ImageButton play_next_music;
@@ -60,6 +64,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         img_drop_down = findViewById(R.id.detail_iv_drop_down);
         tv_detail_music_title = findViewById(R.id.detail_tv_music_title);
         tv_detail_music_title.setText(GlobalVal.getPlayingMusic().getTitle());
+        seekBar = findViewById(R.id.detail_seek_bar);
         play_pre_music = findViewById(R.id.detail_play_pre);
         play_current_music = findViewById(R.id.detail_play_start);
         play_next_music = findViewById(R.id.detail_play_next);
@@ -72,8 +77,15 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         // init detail activity UI
 //        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon_2);
         Bitmap bmp = BitmapFactory.decodeFile(music.getAlbumImgPath());
-        albumView.setImage(ImageTools.scaleBitmap(bmp));
+        if (bmp == null)
+            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.default_music);
+        albumView.setImage(ImageTools.scaleBitmap(bmp, (int)(MusicApplication.mScreenWidth*0.7)));
         tv_singer.setText(music.getArtist());
+
+        MarginLayoutParams mPara = (MarginLayoutParams)seekBar.getLayoutParams();
+        mPara.leftMargin = (int)(MusicApplication.mScreenWidth * 0.1);
+        mPara.rightMargin = (int)(MusicApplication.mScreenWidth * 0.1);
+
         if (GlobalVal.getPlayService().isPlaying()) {
             albumView.start();
             play_current_music.setImageResource(R.drawable.player_btn_pause_normal);
@@ -99,6 +111,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private void setClickListener() {
         img_drop_down.setOnClickListener(this);
         play_pre_music.setOnClickListener(this);
+        seekBar.setOnSeekBarChangeListener(mSeekBarChangeListener);
     }
 
     @Override
@@ -115,6 +128,24 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 break;
         }
     }
+
+    private SeekBar.OnSeekBarChangeListener mSeekBarChangeListener =
+            new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
+        }
+    };
 
     @Override
     public void finish() {

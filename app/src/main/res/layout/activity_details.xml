@@ -55,17 +55,16 @@
             <!--android:layout_height="wrap_content"-->
             <!--android:layout_marginTop="5dp" />-->
 
-        <!--<SeekBar-->
-            <!--android:id="@+id/sb_play_progress"-->
-            <!--style="?android:attr/progressBarStyleHorizontal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="10dp"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:max="100"-->
-            <!--android:progressDrawable="@drawable/play_progressbar"-->
-            <!--android:thumb="@drawable/progress_thumb"-->
-            <!--android:thumbOffset="5dp" />-->
+        <SeekBar
+            android:id="@+id/detail_seek_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:max="100"
+            android:thumb="@drawable/detail_seek_bar_thumb"
+            android:thumbOffset="5dp" />
 
         <LinearLayout
             android:id="@+id/ll_detail_play_controller"

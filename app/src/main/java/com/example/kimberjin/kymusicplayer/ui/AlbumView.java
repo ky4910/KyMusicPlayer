@@ -103,7 +103,6 @@ public class AlbumView extends View {
             }
         }
 
-        Log.e(TAG, "setMeasuredDimension: " + width + ", " + height);
         setMeasuredDimension(width, height);
     }
 
@@ -120,8 +119,9 @@ public class AlbumView extends View {
         canvas.save();
         mMatrix.setRotate(mRotation, getMeasuredWidth()/2, getMeasuredHeight()/2);
         canvas.drawBitmap(mClipBitmap, mMatrix, null);
-        canvas.drawBitmap(mCircleBitmap, (getMeasuredWidth() - mCircleBitmap.getWidth()/2),
-                (getMeasuredHeight() - mCircleBitmap.getHeight()/2), null);
+        // left和top参数分别为顶点坐标x，y
+        canvas.drawBitmap(mCircleBitmap, (getMeasuredWidth() - mCircleBitmap.getWidth())/2,
+                (getMeasuredHeight() - mCircleBitmap.getHeight())/2, null);
         canvas.restore();
     }
 
@@ -157,13 +157,10 @@ public class AlbumView extends View {
         int widthSpec = MeasureSpec.makeMeasureSpec(widthSize, MeasureSpec.AT_MOST);
         int heightSpec = MeasureSpec.makeMeasureSpec(heightSize, MeasureSpec.AT_MOST);
 
-        Log.e(TAG, "widthSize:" + widthSize + " heightSize:" + heightSize
-            + " widthSpec:" + widthSpec + " heightSpec:" + heightSpec);
-
         measure(widthSpec, heightSpec);
 
         mClipBitmap = createCircleBitmap(bmp);
-        Log.e(TAG, "width:" + bmp.getWidth() + " height:" + bmp.getHeight());
+
         requestLayout();
         invalidate();
     }

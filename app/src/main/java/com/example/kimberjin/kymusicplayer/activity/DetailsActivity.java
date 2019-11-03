@@ -18,6 +18,9 @@ import com.example.kimberjin.kymusicplayer.adapter.DetailsVpAdapter;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.application.MusicApplication;
 import com.example.kimberjin.kymusicplayer.bean.Music;
+import com.example.kimberjin.kymusicplayer.service.IPlayerService;
+import com.example.kimberjin.kymusicplayer.service.OnPlayMusicListener;
+import com.example.kimberjin.kymusicplayer.service.PlayerService;
 import com.example.kimberjin.kymusicplayer.ui.AlbumView;
 import com.example.kimberjin.kymusicplayer.util.ImageTools;
 
@@ -26,7 +29,7 @@ import java.util.ArrayList;
 /**
  * Created by ky4910 on 2019/10/27 18:38
  */
-public class DetailsActivity extends BaseActivity implements View.OnClickListener {
+public class DetailsActivity extends BaseActivity implements View.OnClickListener, OnPlayMusicListener {
 
     public static final String TAG = "Detail_Activity";
 
@@ -47,6 +50,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
     ViewPager viewPager;
 
+    private PlayerService mPlayerService = GlobalVal.getPlayService();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +66,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void bindViews() {
+        getPlayService().setOnPlayerListener(this);
+
         img_drop_down = findViewById(R.id.detail_iv_drop_down);
         tv_detail_music_title = findViewById(R.id.detail_tv_music_title);
         tv_detail_music_title.setText(GlobalVal.getPlayingMusic().getTitle());
@@ -111,6 +118,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private void setClickListener() {
         img_drop_down.setOnClickListener(this);
         play_pre_music.setOnClickListener(this);
+        play_current_music.setOnClickListener(this);
+        play_next_music.setOnClickListener(this);
         seekBar.setOnSeekBarChangeListener(mSeekBarChangeListener);
     }
 
@@ -122,12 +131,62 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.detail_play_pre:
-                Log.e(TAG, "detail play previous clicked!");
+                mPlayerService.onPlayPrev();
+                break;
+            case R.id.detail_play_start:
+                mPlayerService.playOrPause();
+                break;
+            case R.id.detail_play_next:
+                mPlayerService.onPlayNext();
                 break;
             default:
                 break;
         }
     }
+
+    @Override
+    public void onMusicPlay() {
+        updateUI();
+        Log.e(TAG, "onMusicPlay() called!");
+    }
+
+    @Override
+    public void onMusicCurrentPosition(int currentPosition) {
+
+    }
+
+    @Override
+    public void onMusicPause() {
+        updateUI();
+        Log.e(TAG, "onMusicPause() called!");
+    }
+
+    @Override
+    public void onMusicComplete() {
+
+    }
+
+    private void updateUI() {
+        Music music = GlobalVal.getPlayingMusic();
+        // init detail activity UI
+//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon_2);
+        Bitmap bmp = BitmapFactory.decodeFile(music.getAlbumImgPath());
+        if (bmp == null)
+            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.default_music);
+        albumView.setImage(ImageTools.scaleBitmap(bmp, (int)(MusicApplication.mScreenWidth*0.7)));
+        tv_singer.setText(music.getArtist());
+
+        if (mPlayerService.isPlaying()) {
+            albumView.start();
+            Log.e(TAG, "start rotation!");
+            play_current_music.setImageResource(R.drawable.player_btn_pause_normal);
+        } else {
+            albumView.pause();
+            Log.e(TAG, "pause rotation!");
+            play_current_music.setImageResource(R.drawable.player_btn_play_normal);
+        }
+    }
+
 
     private SeekBar.OnSeekBarChangeListener mSeekBarChangeListener =
             new SeekBar.OnSeekBarChangeListener() {

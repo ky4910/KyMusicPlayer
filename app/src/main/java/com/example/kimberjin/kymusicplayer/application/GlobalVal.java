@@ -51,6 +51,8 @@ public class GlobalVal {
         isPlaying = state;
     }
 
+    public static boolean getPlayingState() { return isPlaying; }
+
     public static void setPlayingMusic(Music music) {
         mPlayingMusic = music;
     }

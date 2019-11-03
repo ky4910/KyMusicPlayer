@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
         switch (view.getId()) {
             case R.id.imgBtn_play:
                 Log.i(TAG, "play button clicked!");
-                getPlayService().playOrStop();
+                getPlayService().playOrPause();
                 break;
             case R.id.imgBtn_next:
                 Log.i(TAG, "next button clicked!");
@@ -134,6 +134,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     public void onMusicPlay() {
         setBottomPlayBar();
         img_play.setImageResource(R.drawable.default_playing);
+        Log.e(TAG, "main activity onMusicPlay!");
     }
 
     @Override
@@ -144,7 +145,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     }
 
     @Override
-    public void onMusicStop() {
+    public void onMusicPause() {
         Log.e(TAG, "onMusicStop function from MainActivity!");
         img_play.setImageResource(R.drawable.default_stop);
     }

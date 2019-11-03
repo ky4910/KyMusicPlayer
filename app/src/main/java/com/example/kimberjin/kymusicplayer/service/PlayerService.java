@@ -67,7 +67,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     public void play(List<Music> list, int position) {
         music_position = position;
-        playing_progress = 0;
+//        playing_progress = 0;
         musicList = list;
         play(list.get(position));
     }
@@ -83,7 +83,8 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         mediaPlayer.reset();
         try {
             mediaPlayer.setDataSource(music.getUrl());
-            mediaPlayer.prepare();
+            // mediaPlayer.prepare();
+            mediaPlayer.prepareAsync();
             // register the listener
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
@@ -121,24 +122,31 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         }
     }
 
-    public void playOrStop() {
+    public void playOrPause() {
         if (mediaPlayer.isPlaying()){
-            stop();
-        }else {
-            play(musicList.get(music_position));
+            pause();
+        } else {
+            resume();
         }
     }
 
-    private void stop() {
+    private void pause() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
+            mediaPlayer.pause();
             GlobalVal.setIsPlaying(false);
-            mPlayerServiceListener.onMusicStop();
-
+            mPlayerServiceListener.onMusicPause();
         }
+    }
+
+    private void resume() {
+        if (isPlaying())
+            return;
+        mediaPlayer.start();
+        mPlayerServiceListener.onMusicPlay();
     }
 
     public boolean isPlaying() {
+        // return GlobalVal.getPlayingState();
         return  mediaPlayer != null && mediaPlayer.isPlaying();
     }
 
@@ -158,13 +166,14 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     }
 
     @Override
-    public void onStop() {
+    public void onPause() {
 
     }
 
     @Override
     public void onPlayNext() {
         playing_progress = 0;
+        GlobalVal.setIsPlaying(true);
         if (musicList == null) {
             musicList = GeneralUtil.getLocalMusics();
         }
@@ -179,6 +188,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     @Override
     public void onPlayPrev() {
         playing_progress = 0;
+        GlobalVal.setIsPlaying(true);
         if (musicList == null) {
             musicList = GeneralUtil.getLocalMusics();
         }
@@ -187,7 +197,9 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         } else {
             music_position--;
         }
+        Log.e(TAG, "onPlayPrev before onPlay!");
         onPlay();
+        Log.e(TAG, "onPlayPrev after onPlay!");
     }
 
     public class MusicBinder extends Binder {

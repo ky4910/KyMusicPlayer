@@ -13,7 +13,7 @@ public interface OnPlayMusicListener {
 
     void onMusicCurrentPosition(int currentPosition);
 
-    void onMusicStop();
+    void onMusicPause();
 
     void onMusicComplete();
 

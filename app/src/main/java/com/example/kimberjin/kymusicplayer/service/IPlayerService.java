@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface IPlayerService {
     void onPlay();
-    void onStop();
+    void onPause();
     void onPlayNext();
     void onPlayPrev();
 }

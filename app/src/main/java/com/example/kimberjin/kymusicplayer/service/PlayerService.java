@@ -70,6 +70,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 //        playing_progress = 0;
         musicList = list;
         play(list.get(position));
+        mPlayerServiceListener.onMusicPlay();
     }
 
     /*
@@ -83,9 +84,11 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         mediaPlayer.reset();
         try {
             mediaPlayer.setDataSource(music.getUrl());
-            // mediaPlayer.prepare();
-            mediaPlayer.prepareAsync();
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+
             // register the listener
+            /*
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
@@ -101,7 +104,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
                     complete();
                 }
             });
-
+            */
             GlobalVal.setIsPlaying(true);
             GlobalVal.setPlayingMusic(music);
             mPlayerServiceListener.onMusicPlay();
@@ -147,7 +150,14 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     public boolean isPlaying() {
         // return GlobalVal.getPlayingState();
-        return  mediaPlayer != null && mediaPlayer.isPlaying();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            Log.e(TAG, "isPlaying return true! " + (mediaPlayer!=null) + ", " + mediaPlayer.isPlaying());
+            return true;
+        } else {
+            Log.e(TAG, "isPlaying return false!" + (mediaPlayer!=null) + ", " + mediaPlayer.isPlaying());
+            return false;
+        }
+        //return  mediaPlayer != null && mediaPlayer.isPlaying();
     }
 
     private void complete() {
@@ -173,7 +183,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     @Override
     public void onPlayNext() {
         playing_progress = 0;
-        GlobalVal.setIsPlaying(true);
         if (musicList == null) {
             musicList = GeneralUtil.getLocalMusics();
         }

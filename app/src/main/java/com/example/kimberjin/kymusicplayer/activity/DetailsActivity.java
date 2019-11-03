@@ -174,6 +174,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         if (bmp == null)
             bmp = BitmapFactory.decodeResource(getResources(), R.drawable.default_music);
         albumView.setImage(ImageTools.scaleBitmap(bmp, (int)(MusicApplication.mScreenWidth*0.7)));
+        tv_detail_music_title.setText(music.getTitle());
         tv_singer.setText(music.getArtist());
 
         if (mPlayerService.isPlaying()) {

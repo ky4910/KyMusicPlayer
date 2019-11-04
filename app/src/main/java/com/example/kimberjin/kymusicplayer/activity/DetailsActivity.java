@@ -52,6 +52,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
     private PlayerService mPlayerService = GlobalVal.getPlayService();
 
+    private int playFlag = 0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         DetailsVpAdapter detailsVpAdapter = new DetailsVpAdapter(mViewPagerContent);
         viewPager.setAdapter(detailsVpAdapter);
         setClickListener();
+
+        playFlag = 1;
     }
 
     private void bindViews() {
@@ -131,12 +135,14 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
             case R.id.detail_play_pre:
+                playFlag = 1;
                 mPlayerService.onPlayPrev();
                 break;
             case R.id.detail_play_start:
                 mPlayerService.playOrPause();
                 break;
             case R.id.detail_play_next:
+                playFlag = 1;
                 mPlayerService.onPlayNext();
                 break;
             default:
@@ -157,6 +163,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void onMusicPause() {
+        playFlag = 0;
         updateUI();
         Log.e(TAG, "onMusicPause() called!");
     }
@@ -177,6 +184,10 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         tv_detail_music_title.setText(music.getTitle());
         tv_singer.setText(music.getArtist());
 
+        if (playFlag == 1) {
+            albumView.clearRotation();
+        }
+
         if (mPlayerService.isPlaying()) {
             albumView.start();
             Log.e(TAG, "start rotation!");
@@ -187,7 +198,6 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             play_current_music.setImageResource(R.drawable.player_btn_play_normal);
         }
     }
-
 
     private SeekBar.OnSeekBarChangeListener mSeekBarChangeListener =
             new SeekBar.OnSeekBarChangeListener() {

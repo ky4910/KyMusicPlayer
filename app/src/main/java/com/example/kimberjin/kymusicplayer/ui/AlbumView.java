@@ -182,6 +182,13 @@ public class AlbumView extends View {
         isRunning = false;
     }
 
+    /**
+     * mRotation置零
+     */
+    public void clearRotation() {
+        mRotation = 0;
+    }
+
     private Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {

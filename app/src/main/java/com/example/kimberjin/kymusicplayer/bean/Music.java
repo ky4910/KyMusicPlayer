@@ -10,7 +10,7 @@ public class Music {
     private String albumId;
     private String albumImgPath;
     private String artist;
-    private long duration;
+    private int duration;
     private String url;
     private String lrcLink;
     private String composer;
@@ -56,11 +56,11 @@ public class Music {
         this.artist = artist;
     }
 
-    public long getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
@@ -96,7 +96,7 @@ public class Music {
         this.data_added = data_added;
     }
 
-    public Music(long id, String title, String albumId, String albumImgPath, String artist, long duration,
+    public Music(long id, String title, String albumId, String albumImgPath, String artist, int duration,
                  String url, String lrcLink, String composer, String data_added) {
         this.id = id;
         this.title = title;

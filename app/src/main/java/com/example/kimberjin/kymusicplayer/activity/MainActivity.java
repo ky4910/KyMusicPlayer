@@ -145,6 +145,11 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     }
 
     @Override
+    public void onMusicCurrentProgress(int currentProgress) {
+
+    }
+
+    @Override
     public void onMusicPause() {
         Log.e(TAG, "onMusicStop function from MainActivity!");
         img_play.setImageResource(R.drawable.default_stop);

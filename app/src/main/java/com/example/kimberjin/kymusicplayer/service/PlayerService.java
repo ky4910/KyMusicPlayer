@@ -7,6 +7,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
@@ -16,6 +17,8 @@ import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 // https://www.cnblogs.com/io1024/p/11568507.html
 
@@ -29,6 +32,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     private List<Music> musicList = new ArrayList<>();
     private OnPlayMusicListener mPlayerServiceListener;
+    private ExecutorService mProgressUpdatedListener = Executors.newSingleThreadExecutor();
 
     public PlayerService() {
     }
@@ -52,6 +56,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     @Override
     public void onCreate() {
         super.onCreate();
+        mProgressUpdatedListener.execute(mPublishProgressRunnable);
     }
 
     @Override
@@ -209,6 +214,42 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         Log.e(TAG, "onPlayPrev before onPlay!");
         onPlay();
         Log.e(TAG, "onPlayPrev after onPlay!");
+    }
+
+    /**
+     * 更新进度的线程
+     */
+    private Runnable mPublishProgressRunnable = new Runnable() {
+        @Override
+        public void run() {
+            for(;;) {
+                if(mediaPlayer != null && mediaPlayer.isPlaying() &&
+                        mPlayerServiceListener != null) {
+                    mPlayerServiceListener.onMusicCurrentProgress(mediaPlayer.getCurrentPosition());
+                }
+
+                SystemClock.sleep(200);
+            }
+        }
+    };
+
+    /**
+     * 服务销毁时，释放各种控件
+     */
+    private void release() {
+        if (!mProgressUpdatedListener.isShutdown())
+            mProgressUpdatedListener.shutdownNow();
+        mProgressUpdatedListener = null;
+
+        if ( mediaPlayer != null)
+            mediaPlayer.release();
+        mediaPlayer = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        release();
+        super.onDestroy();
     }
 
     public class MusicBinder extends Binder {

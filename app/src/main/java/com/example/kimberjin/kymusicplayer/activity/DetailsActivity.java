@@ -76,6 +76,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         tv_detail_music_title = findViewById(R.id.detail_tv_music_title);
         tv_detail_music_title.setText(GlobalVal.getPlayingMusic().getTitle());
         seekBar = findViewById(R.id.detail_seek_bar);
+        seekBar.setMax(GlobalVal.getPlayingMusic().getDuration());
         play_pre_music = findViewById(R.id.detail_play_pre);
         play_current_music = findViewById(R.id.detail_play_start);
         play_next_music = findViewById(R.id.detail_play_next);
@@ -159,6 +160,11 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     @Override
     public void onMusicCurrentPosition(int currentPosition) {
 
+    }
+
+    @Override
+    public void onMusicCurrentProgress(int currentProgress) {
+        seekBar.setProgress(currentProgress);
     }
 
     @Override

@@ -15,6 +15,8 @@ public interface OnPlayMusicListener {
 
     void onMusicPause();
 
+    void onMusicCurrentProgress(int currentProgress);
+
     void onMusicComplete();
 
 }

@@ -174,11 +174,6 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
         Log.e(TAG, "onMusicPause() called!");
     }
 
-    @Override
-    public void onMusicComplete() {
-
-    }
-
     private void updateUI() {
         Music music = GlobalVal.getPlayingMusic();
         // init detail activity UI
@@ -219,7 +214,8 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
+            int progress = seekBar.getProgress();
+            mPlayerService.seek(progress);
         }
     };
 

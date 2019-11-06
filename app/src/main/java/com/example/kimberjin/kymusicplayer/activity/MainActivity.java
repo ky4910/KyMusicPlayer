@@ -156,11 +156,6 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     }
 
     @Override
-    public void onMusicComplete() {
-
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
     }

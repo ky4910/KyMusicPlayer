@@ -57,6 +57,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     public void onCreate() {
         super.onCreate();
         mProgressUpdatedListener.execute(mPublishProgressRunnable);
+        mediaPlayer.setOnCompletionListener(this);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-
+        onPlayNext();
     }
 
     public void play(List<Music> list, int position) {
@@ -75,7 +76,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 //        playing_progress = 0;
         musicList = list;
         play(list.get(position));
-        mPlayerServiceListener.onMusicPlay();
     }
 
     /*
@@ -92,24 +92,6 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
             mediaPlayer.prepare();
             mediaPlayer.start();
 
-            // register the listener
-            /*
-            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    mediaPlayer.start();
-                    if (playing_progress > 0) {
-                        mediaPlayer.seekTo(playing_progress);
-                    }
-                }
-            });
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mediaPlayer) {
-                    complete();
-                }
-            });
-            */
             GlobalVal.setIsPlaying(true);
             GlobalVal.setPlayingMusic(music);
             mPlayerServiceListener.onMusicPlay();
@@ -118,6 +100,12 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void seek(int msec) {
+        if (!isPlaying())
+            return;
+        mediaPlayer.seekTo(msec);
     }
 
     public void scanLocalMusic() {
@@ -154,21 +142,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     }
 
     public boolean isPlaying() {
-        // return GlobalVal.getPlayingState();
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            Log.e(TAG, "isPlaying return true! " + (mediaPlayer!=null) + ", " + mediaPlayer.isPlaying());
-            return true;
-        } else {
-            Log.e(TAG, "isPlaying return false!" + (mediaPlayer!=null) + ", " + mediaPlayer.isPlaying());
-            return false;
-        }
-        //return  mediaPlayer != null && mediaPlayer.isPlaying();
-    }
-
-    private void complete() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-        }
+        return  mediaPlayer != null && mediaPlayer.isPlaying();
     }
 
     public void setOnPlayerListener(OnPlayMusicListener listener) {
@@ -215,6 +189,8 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         onPlay();
         Log.e(TAG, "onPlayPrev after onPlay!");
     }
+
+
 
     /**
      * 更新进度的线程

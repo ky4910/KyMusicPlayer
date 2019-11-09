@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
     }
 
     protected void initView() {
-        getPlayService().setOnPlayerListener(this);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);
@@ -128,6 +127,14 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
                 startActivity(new Intent(this, DetailsActivity.class));
                 break;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBottomPlayBar();
+        getPlayService().setOnPlayerListener(this);
+        Log.e(TAG, "onResume function called!");
     }
 
     @Override

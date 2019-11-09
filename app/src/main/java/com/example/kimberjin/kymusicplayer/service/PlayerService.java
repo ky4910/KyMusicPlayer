@@ -32,6 +32,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     private List<Music> musicList = new ArrayList<>();
     private OnPlayMusicListener mPlayerServiceListener;
+    private List<OnPlayMusicListener> listenerList = new ArrayList<>();
     private ExecutorService mProgressUpdatedListener = Executors.newSingleThreadExecutor();
 
     public PlayerService() {
@@ -147,6 +148,16 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     public void setOnPlayerListener(OnPlayMusicListener listener) {
         mPlayerServiceListener = listener;
+        listenerList.add(listener);
+    }
+
+    public void clearListener(Object object) {
+        for (int i = 0; i < listenerList.size(); i++) {
+            if (listenerList.get(i).equals(object)) {
+                listenerList.remove(i);
+                Log.e(TAG, "clear the listener!");
+            }
+        }
     }
 
     @Override

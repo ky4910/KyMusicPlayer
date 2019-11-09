@@ -223,5 +223,6 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.activity_no_slide, R.anim.activity_slide_down);
+        getPlayService().clearListener(this);
     }
 }

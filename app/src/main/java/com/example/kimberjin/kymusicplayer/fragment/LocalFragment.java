@@ -44,7 +44,6 @@ public class LocalFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
     LocalMusicRvAdapter rvAdapter;
-    DbClient dbClient = new DbClient();
 
     public PlayerService.MusicBinder mBinder;
     private List<Music> localSongsList = new ArrayList<>();
@@ -55,11 +54,6 @@ public class LocalFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (this.mBinder == null) {
-            Log.e(TAG, "mBinder is null!");
-        } else {
-            Log.e(TAG, "It is ok!");
-        }
     }
 
     @Nullable
@@ -94,7 +88,6 @@ public class LocalFragment extends BaseFragment {
             public void onItemClicked(View view, int position) {
                 Toast.makeText(getContext(), localSongsList.get(position).getTitle()
                         + " selected!", Toast.LENGTH_SHORT).show();
-                // GlobalVal.getPlayService().test();
                 // Fragment调用PlayerService的play()方法，play()中回调OnPlayMusicListener接口的
                 // onMusicPlay()，onMusicPlay()由MainActiviti继承OnPlayMusicListener后实现，
                 // 并在onMusicPlay()中实现Bottom PlayBar UI更新操作

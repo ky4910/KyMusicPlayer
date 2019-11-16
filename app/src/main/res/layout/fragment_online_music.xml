@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvOnline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Online Music"/>
-
     <Button
-        android:id="@+id/getInfoBtn"
+        android:id="@+id/online_test_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Get Song Info"/>
+        android:text="@string/test_button"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_online_music"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

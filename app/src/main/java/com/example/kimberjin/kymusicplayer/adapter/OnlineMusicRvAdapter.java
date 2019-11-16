@@ -1,8 +1,6 @@
 package com.example.kimberjin.kymusicplayer.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,17 +11,15 @@ import android.widget.TextView;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.bean.Music;
-import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
- * Created by ky4910 on 2019/9/29
+ * Created by ky4910 on 2019/11/9 21:15
  */
-public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapter.LocalSongViewHolder> {
+public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdapter.OnlineViewHolder>{
 
     private Context mContext;
     private List<Music> musicList;
@@ -38,34 +34,23 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
         this.mOnItemClickListener = clickListener;
     }
 
-    public LocalMusicRvAdapter(Context mContext, List<Music> musicList) {
+    public OnlineMusicRvAdapter(Context mContext, List<Music> musicList) {
         this.mContext = mContext;
         this.musicList = musicList;
     }
 
     @NonNull
     @Override
-    public LocalSongViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public OnlineViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.song_item, viewGroup, false);
-        LocalSongViewHolder localViewHolder = new LocalSongViewHolder(view, mOnItemClickListener);
-        return localViewHolder;
+        OnlineViewHolder onlineViewHolder = new OnlineViewHolder(view, mOnItemClickListener);
+        return onlineViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LocalSongViewHolder localSongViewHolder, int i) {
-        Music music = musicList.get(i);
-        if (music.getAlbumImgPath() != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(music.getAlbumImgPath());
-            localSongViewHolder.imageView.setImageBitmap(bitmap);
-        } else {
-            localSongViewHolder.imageView.setImageResource(R.drawable.default_music);
-        }
-        localSongViewHolder.textTitle.setText(music.getTitle());
-        localSongViewHolder.textArtist.setText(music.getArtist());
-        String mTime = GeneralUtil.formatTime(music.getDuration());
-        localSongViewHolder.textDuration.setText(mTime);
-        // localSongViewHolder.textDuration.setText(String.format());
+    public void onBindViewHolder(@NonNull OnlineViewHolder onlineViewHolder, int i) {
+
     }
 
     @Override
@@ -73,7 +58,7 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
         return musicList.size();
     }
 
-    public class LocalSongViewHolder extends RecyclerView.ViewHolder {
+    public class OnlineViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.music_img)
         ImageView imageView;
@@ -84,9 +69,9 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
         @BindView(R.id.tv_music_duration)
         TextView textDuration;
 
-        public LocalSongViewHolder(@NonNull View itemView, final OnItemClickListener onClickListener) {
+        public OnlineViewHolder(@NonNull View itemView, final OnItemClickListener onClickListener) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener(){
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (onClickListener != null) {
@@ -97,7 +82,6 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
                     }
                 }
             });
-            ButterKnife.bind(this, itemView);
         }
     }
 }

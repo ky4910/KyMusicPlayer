@@ -45,7 +45,6 @@ public class LocalFragment extends BaseFragment {
     private RecyclerView recyclerView;
     LocalMusicRvAdapter rvAdapter;
 
-    public PlayerService.MusicBinder mBinder;
     private List<Music> localSongsList = new ArrayList<>();
 
     public LocalFragment() {

@@ -12,6 +12,8 @@ public class OnlineMusic {
     private String pic_small;
     @SerializedName("lrclink")
     private String lrclink;
+    @SerializedName("file_duration")
+    private String file_duration;
     @SerializedName("song_id")
     private String song_id;
     @SerializedName("title")
@@ -45,6 +47,14 @@ public class OnlineMusic {
 
     public void setLrclink(String lrclink) {
         this.lrclink = lrclink;
+    }
+
+    public String getFile_duration() {
+        return file_duration;
+    }
+
+    public void setFile_duration(String file_duration) {
+        this.file_duration = file_duration;
     }
 
     public String getSong_id() {

@@ -88,7 +88,7 @@ public class GeneralUtil {
      * @param milliseconds 毫秒数
      * @return ##:##
      */
-    public static String formatTime(long milliseconds) {
+    public static String formatLocalSongTime(long milliseconds) {
 
         Log.i(TAG, "unformatted time is " + milliseconds);
 

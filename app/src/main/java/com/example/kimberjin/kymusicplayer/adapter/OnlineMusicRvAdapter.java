@@ -1,8 +1,11 @@
 package com.example.kimberjin.kymusicplayer.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.bean.Music;
+import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
 
 import java.util.List;
 
@@ -22,7 +26,7 @@ import butterknife.BindView;
 public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdapter.OnlineViewHolder>{
 
     private Context mContext;
-    private List<Music> musicList;
+    private List<OnlineMusic> onlineMusicList;
 
     private OnItemClickListener mOnItemClickListener;
 
@@ -34,14 +38,15 @@ public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdap
         this.mOnItemClickListener = clickListener;
     }
 
-    public OnlineMusicRvAdapter(Context mContext, List<Music> musicList) {
+    public OnlineMusicRvAdapter(Context mContext, List<OnlineMusic> musicList) {
         this.mContext = mContext;
-        this.musicList = musicList;
+        this.onlineMusicList = musicList;
     }
 
     @NonNull
     @Override
     public OnlineViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Log.e("kimber", "online onCreateViewHolder!");
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.song_item, viewGroup, false);
         OnlineViewHolder onlineViewHolder = new OnlineViewHolder(view, mOnItemClickListener);
@@ -50,12 +55,26 @@ public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdap
 
     @Override
     public void onBindViewHolder(@NonNull OnlineViewHolder onlineViewHolder, int i) {
+        Log.e("kimber", "online onBindViewHolder!");
+        OnlineMusic onlineMusic = onlineMusicList.get(i);
 
+        /*
+        if (onlineMusic.getPic_big() != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(onlineMusic.getPic_big());
+            onlineViewHolder.imageView.setImageBitmap(bitmap);
+        } else {
+            onlineViewHolder.imageView.setImageResource(R.drawable.default_music);
+        }
+        */
+
+        onlineViewHolder.textTitle.setText(onlineMusic.getTitle());
+        onlineViewHolder.textArtist.setText(onlineMusic.getArtist_name());
+        onlineViewHolder.textDuration.setText(onlineMusic.getFile_duration());
     }
 
     @Override
     public int getItemCount() {
-        return musicList.size();
+        return onlineMusicList.size();
     }
 
     public class OnlineViewHolder extends RecyclerView.ViewHolder {

@@ -63,7 +63,7 @@ public class LocalMusicRvAdapter extends RecyclerView.Adapter<LocalMusicRvAdapte
         }
         localSongViewHolder.textTitle.setText(music.getTitle());
         localSongViewHolder.textArtist.setText(music.getArtist());
-        String mTime = GeneralUtil.formatTime(music.getDuration());
+        String mTime = GeneralUtil.formatLocalSongTime(music.getDuration());
         localSongViewHolder.textDuration.setText(mTime);
         // localSongViewHolder.textDuration.setText(String.format());
     }

@@ -1,7 +1,5 @@
 package com.example.kimberjin.kymusicplayer.http;
 
-import com.google.gson.Gson;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -44,7 +42,7 @@ public abstract class HttpHelper {
         return retrofit;
     }
 
-    public static ApiService getApiService(){
+    public static ApiService getRequestInstance(){
         return initRetrofit().create(ApiService.class);
     }
 }

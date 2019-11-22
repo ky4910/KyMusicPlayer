@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
@@ -19,11 +20,14 @@ import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by ky4910 on 2019/11/9 21:15
  */
 public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdapter.OnlineViewHolder>{
+
+    public static final String TAG = "Online_Music_Adapter";
 
     private Context mContext;
     private List<OnlineMusic> onlineMusicList;
@@ -46,28 +50,29 @@ public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdap
     @NonNull
     @Override
     public OnlineViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        Log.e("kimber", "online onCreateViewHolder!");
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.song_item, viewGroup, false);
-        OnlineViewHolder onlineViewHolder = new OnlineViewHolder(view, mOnItemClickListener);
-        return onlineViewHolder;
+        return  new OnlineViewHolder(view, mOnItemClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull OnlineViewHolder onlineViewHolder, int i) {
-        Log.e("kimber", "online onBindViewHolder!");
         OnlineMusic onlineMusic = onlineMusicList.get(i);
 
-        /*
-        if (onlineMusic.getPic_big() != null) {
-            Bitmap bitmap = BitmapFactory.decodeFile(onlineMusic.getPic_big());
-            onlineViewHolder.imageView.setImageBitmap(bitmap);
-        } else {
-            onlineViewHolder.imageView.setImageResource(R.drawable.default_music);
-        }
-        */
+        Glide.with(mContext)
+                .load(onlineMusic.getPic_big())
+                .error(R.drawable.default_music)
+                .into(onlineViewHolder.imageView);
 
-        onlineViewHolder.textTitle.setText(onlineMusic.getTitle());
+        String newTitle;
+        int pos = onlineMusic.getTitle().indexOf("（");
+        if (pos == -1){
+            newTitle = onlineMusic.getTitle();
+        } else {
+            newTitle = onlineMusic.getTitle().substring(0, pos);
+        }
+
+        onlineViewHolder.textTitle.setText(newTitle);
         onlineViewHolder.textArtist.setText(onlineMusic.getArtist_name());
         onlineViewHolder.textDuration.setText(onlineMusic.getFile_duration());
     }
@@ -101,6 +106,7 @@ public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdap
                     }
                 }
             });
+            ButterKnife.bind(this, itemView);
         }
     }
 }

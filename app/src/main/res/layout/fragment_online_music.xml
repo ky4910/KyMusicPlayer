@@ -4,12 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/online_test_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test_button"/>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_online_music"
         android:orientation="vertical"

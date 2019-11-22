@@ -1,5 +1,6 @@
 package com.example.kimberjin.kymusicplayer.http;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
@@ -28,17 +29,20 @@ public class HttpClient extends HttpHelper {
      * 参数： type = 1-新歌榜,2-热歌榜,11-摇滚榜,12-爵士,16-流行,21-欧美金曲榜,
      *                  22-经典老歌榜,23-情歌对唱榜,24-影视金曲榜,25-网络歌曲榜
      */
-    public static void getOnlineMusicList(String type,int size,int offset) {
+    public static void getOnlineMusicList(String type,int size,int offset, final OnlineCallBack<OnlineMusicList> callback) {
         getRequestInstance().getOnLineMusicList(type, String.valueOf(size), String.valueOf(offset), GET_MUSIC_LIST_METHOD)
                 .enqueue(new Callback<OnlineMusicList>() {
                     @Override
-                    public void onResponse(Call<OnlineMusicList> call, Response<OnlineMusicList> response) {
-                        handleResponse(response.body());
+                    public void onResponse(@NonNull Call<OnlineMusicList> call, @NonNull Response<OnlineMusicList> response) {
+                        if (callback != null) {
+                            callback.onSuccess(response.body());
+                        }
                     }
 
                     @Override
-                    public void onFailure(Call<OnlineMusicList> call, Throwable t) {
+                    public void onFailure(@NonNull Call<OnlineMusicList> call, @NonNull Throwable t) {
                         t.printStackTrace();
+                        callback.onFail(t);
                     }
                 });
     }

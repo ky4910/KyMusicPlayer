@@ -6,6 +6,6 @@ package com.example.kimberjin.kymusicplayer.http;
 public interface OnlineCallBack<T> {
 
     void onSuccess(T response);
-    void onFailure(Throwable t);
+    void onFail(Throwable t);
 
 }

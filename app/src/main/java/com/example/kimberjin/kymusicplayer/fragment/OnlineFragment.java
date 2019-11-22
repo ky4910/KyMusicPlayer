@@ -20,6 +20,7 @@ import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusicList;
 import com.example.kimberjin.kymusicplayer.http.HttpClient;
+import com.example.kimberjin.kymusicplayer.http.OnlineCallBack;
 import com.example.kimberjin.kymusicplayer.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -29,15 +30,15 @@ import java.util.List;
  *  Created by ky4910 on 2019/09/27
  */
 
-public class OnlineFragment extends BaseFragment{
+public class OnlineFragment extends BaseFragment implements OnlineCallBack {
 
     public static final String TAG = "Online_Fragment";
 
-    RecyclerView recyclerView;
-    OnlineMusicRvAdapter rvAdapter;
+    // example URL => http://tingapi.ting.baidu.com/v1/restserver/ting?size=3&type=1&offset=0&method=baidu.ting.billboard.billList
 
     View mView;
-    Button getBtn;
+    RecyclerView recyclerView;
+    OnlineMusicRvAdapter rvAdapter;
 
     static List<OnlineMusic> onlineSongList = new ArrayList<>();
 
@@ -47,7 +48,7 @@ public class OnlineFragment extends BaseFragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HttpClient.getOnlineMusicList("2", 5, 0);
+        HttpClient.getOnlineMusicList("2", 30, 0, this);
         Log.e(TAG, "onCreate called!");
     }
 
@@ -58,16 +59,6 @@ public class OnlineFragment extends BaseFragment{
         mView = inflater.inflate(R.layout.fragment_online_music, container, false);
         onlineSongList = GlobalVal.getOnlineMusicList();
 
-        getBtn = mView.findViewById(R.id.online_test_btn);
-        getBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onlineSongList = GlobalVal.getOnlineMusicList();
-                Toast.makeText(getContext(), onlineSongList.get(0).getTitle()
-                        + "\nmusic list size is " + onlineSongList.size(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         Log.e(TAG, "onlinemusic size is " + onlineSongList.size());
         return mView;
     }
@@ -75,24 +66,12 @@ public class OnlineFragment extends BaseFragment{
     @Override
     protected void initView(View view) {
         Log.e(TAG, "initView called!");
-        /*
-        recyclerView = view.findViewById(R.id.rv_online_music);
-        rvAdapter = new OnlineMusicRvAdapter(getContext(), onlineSongList);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
-                LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),
-                DividerItemDecoration.VERTICAL));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        int spacingInPixels = 32;
-        recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-
-        recyclerView.setAdapter(rvAdapter);
-        */
     }
 
-    public void testInitView(OnlineMusicList onlineMusicList) {
-        List<OnlineMusic> onlineList = onlineMusicList.getSong_list();
+    public void loadView(OnlineMusicList onlineMusicList) {
+
+        final List<OnlineMusic> onlineList = onlineMusicList.getSong_list();
+
         recyclerView = mView.findViewById(R.id.rv_online_music);
         rvAdapter = new OnlineMusicRvAdapter(getContext(), onlineList);
 
@@ -104,7 +83,31 @@ public class OnlineFragment extends BaseFragment{
         int spacingInPixels = 32;
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
+        for (int i = 0; i < onlineList.size(); i++) {
+            Log.e(TAG, "title:" + onlineList.get(i).getTitle() + " artist:"
+                    + onlineList.get(i).getArtist_name() + " lrcLink:" + onlineList.get(i).getLrclink());
+            Log.e(TAG, "new log!");
+        }
+
         recyclerView.setAdapter(rvAdapter);
+        rvAdapter.setOnItemClickListener(new OnlineMusicRvAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(View view, int position) {
+                Toast.makeText(getContext(), onlineList.get(position).getTitle()
+                        + " selected!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    @Override
+    public void onSuccess(Object response) {
+        OnlineMusicList musicList = (OnlineMusicList) response;
+        Log.e(TAG, "music size is " + musicList.getSong_list().size());
+        loadView(musicList);
+    }
+
+    @Override
+    public void onFail(Throwable t) {
+        Log.e(TAG, "Get music list failed!" + t.toString());
+    }
 }

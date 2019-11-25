@@ -1,11 +1,9 @@
 package com.example.kimberjin.kymusicplayer.http;
 
-import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusicList;
+import com.example.kimberjin.kymusicplayer.bean.OnlineSong;
 
-import java.util.List;
-
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -15,6 +13,7 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     // example URL => http://tingapi.ting.baidu.com/v1/restserver/ting?size=3&type=1&offset=0&method=baidu.ting.billboard.billList
+    // example URL2 => http://tingapi.ting.baidu.com/v1/restserver/ting?songid=672299768&method=baidu.ting.song.play (ResponseData.bitrate.show_link)
 
     String BASE_URL = "http://tingapi.ting.baidu.com/";
     String BASE_URL_BEHIND = "v1/restserver/ting";
@@ -26,12 +25,13 @@ public interface ApiService {
          getOnLineMusicList()等api是接收网络请求数据的方法
      */
     @GET(BASE_URL_BEHIND)
-    Call<OnlineMusicList> getOnLineMusicList(@Query("type")String type, @Query("size") String size,
-                                               @Query("offset") String offset, @Query("method") String method);
-    /*
-    @GET(BASE_URL_BEHIND)
-    Call<MusicLink> getMusicLink(@Query("songid")String songId, @Query("method") String method);
+    Observable<OnlineMusicList> getOnLineMusicList(@Query("type")String type, @Query("size") String size,
+                                                   @Query("offset") String offset, @Query("method") String method);
 
+    @GET(BASE_URL_BEHIND)
+    Observable<OnlineSong> getMusicLink(@Query("songid")String songId, @Query("method") String method);
+
+    /*
     @GET
     Call<ResponseBody> download(@Url String url);
 

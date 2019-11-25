@@ -5,7 +5,10 @@ package com.example.kimberjin.kymusicplayer.http;
  */
 public interface OnlineCallBack<T> {
 
-    void onSuccess(T response);
-    void onFail(Throwable t);
+    void onGetInfoSuccess(T response);
+    void onGetInfoFail(Throwable t);
+
+    void onGetPlayLinkSuccess(T response);
+    void onGetPlaylinkFail(Throwable t);
 
 }

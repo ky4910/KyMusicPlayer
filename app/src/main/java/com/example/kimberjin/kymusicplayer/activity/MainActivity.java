@@ -176,7 +176,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
         Glide.with(this).load(imgPath).placeholder(R.drawable.default_music).into(imgView);
     }
 
-    /* Do not use fragemnt for detail part, and use activity instead. */
+    /*  Do not use fragemnt for detail part, and use activity instead.  */
     private void showDetailsFragment() {
         if (isShowingFragment) {
             Log.i(TAG, "Detail Fragment is showing! Return!");

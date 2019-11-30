@@ -90,7 +90,9 @@ public class LocalFragment extends BaseFragment {
                 // Fragment调用PlayerService的play()方法，play()中回调OnPlayMusicListener接口的
                 // onMusicPlay()，onMusicPlay()由MainActiviti继承OnPlayMusicListener后实现，
                 // 并在onMusicPlay()中实现Bottom PlayBar UI更新操作
+                GlobalVal.setPlayingList(localSongsList);
                 GlobalVal.getPlayService().play(localSongsList, position);
+                // Log.e(TAG, "musicDuration:" + localSongsList.get(position).getDuration());
             }
         });
     }

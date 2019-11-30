@@ -91,12 +91,12 @@ public class HttpClient extends HttpHelper {
 
                     @Override
                     public void onNext(OnlineSong onlineSong) {
-                        callback.onGetPlayLinkSuccess(onlineSong);
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        callback.onGetPlaylinkFail(e);
+
                     }
 
                     @Override

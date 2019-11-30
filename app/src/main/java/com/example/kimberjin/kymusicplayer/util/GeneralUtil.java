@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.example.kimberjin.kymusicplayer.bean.Music;
+import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
 
 import java.util.ArrayList;
 import java.util.Formatter;
@@ -82,6 +83,20 @@ public class GeneralUtil {
         return album_art;
     }
 
+    public static Music musicConverter(OnlineMusic onlineMusic) {
+        Music music = new Music();
+
+        music.setId(Long.parseLong(onlineMusic.getSong_id()));
+        music.setTitle(onlineMusic.getTitle());
+        music.setArtist(onlineMusic.getArtist_name());
+        music.setDuration(Integer.parseInt(onlineMusic.getFile_duration()) * 1000);
+        music.setAlbumImgPath(onlineMusic.getPicPremium());
+        music.setLrcLink(onlineMusic.getLrclink());
+        music.setUrl("none");
+
+        return music;
+    }
+
     /**
      * 将毫秒数格式化为"##:##"的时间
      *
@@ -93,6 +108,7 @@ public class GeneralUtil {
         Log.i(TAG, "unformatted time is " + milliseconds);
 
         if (milliseconds <= 0 || milliseconds >= 24 * 60 * 60 * 1000) {
+            Log.e(TAG, "duration is " + milliseconds);
             return "00:00";
         }
 

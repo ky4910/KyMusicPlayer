@@ -24,6 +24,8 @@ public class OnlineMusic {
     private String album_title;
     @SerializedName("artist_name")
     private String artist_name;
+    @SerializedName("pic_premium")
+    private String picPremium;
 
     public String getPic_big() {
         return pic_big;
@@ -97,4 +99,11 @@ public class OnlineMusic {
         this.artist_name = artist_name;
     }
 
+    public String getPicPremium() {
+        return picPremium;
+    }
+
+    public void setPicPremium(String picPremium) {
+        this.picPremium = picPremium;
+    }
 }

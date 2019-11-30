@@ -96,6 +96,8 @@ public class Music {
         this.data_added = data_added;
     }
 
+    public Music() {}
+
     public Music(long id, String title, String albumId, String albumImgPath, String artist, int duration,
                  String url, String lrcLink, String composer, String data_added) {
         this.id = id;

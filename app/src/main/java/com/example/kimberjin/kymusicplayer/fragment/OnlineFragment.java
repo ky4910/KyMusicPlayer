@@ -16,12 +16,13 @@ import android.widget.Toast;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.OnlineMusicRvAdapter;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
+import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusicList;
-import com.example.kimberjin.kymusicplayer.bean.OnlineSong;
 import com.example.kimberjin.kymusicplayer.http.HttpClient;
 import com.example.kimberjin.kymusicplayer.http.OnlineCallBack;
 import com.example.kimberjin.kymusicplayer.util.SpacesItemDecoration;
+import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,8 @@ public class OnlineFragment extends BaseFragment implements OnlineCallBack {
     RecyclerView recyclerView;
     OnlineMusicRvAdapter rvAdapter;
 
+    Music music = new Music();
+    List<Music> tmpList = new ArrayList<>();
     static List<OnlineMusic> onlineMusicList = new ArrayList<>();
 
     public OnlineFragment() {
@@ -60,7 +63,7 @@ public class OnlineFragment extends BaseFragment implements OnlineCallBack {
         mView = inflater.inflate(R.layout.fragment_online_music, container, false);
         onlineMusicList = GlobalVal.getOnlineMusicList();
 
-        Log.e(TAG, "onlinemusic size is " + onlineMusicList.size());
+        Log.e(TAG, "onlineMusic size is " + onlineMusicList.size());
         return mView;
     }
 
@@ -97,38 +100,33 @@ public class OnlineFragment extends BaseFragment implements OnlineCallBack {
             public void onItemClicked(View view, int position) {
                 Toast.makeText(getContext(), onlineList.get(position).getTitle()
                         + " selected!", Toast.LENGTH_SHORT).show();
-                getSongUrl(onlineMusicList.getSong_list().get(position).getSong_id());
+                GlobalVal.setPlayingOnline(true);
+                GlobalVal.setPlayingList(GlobalVal.getConvertedList());
+                getPlayerService().play(GlobalVal.getConvertedList(), position);
             }
         });
-    }
-
-    private void getSongUrl(String songId) {
-        Log.e(TAG, "getSongUrl => " + "songId is " + songId);
-        HttpClient.getOnlineMusicLink(songId, this);
     }
 
     @Override
     public void onGetInfoSuccess(Object response) {
         OnlineMusicList musicList = (OnlineMusicList) response;
+
         Log.e(TAG, "music size is " + musicList.getSong_list().size());
+        GlobalVal.setOnlineMusicList(musicList.getSong_list());
+
         loadView(musicList);
+
+        for (int i = 0; i < musicList.getSong_list().size(); i++) {
+            music = GeneralUtil.musicConverter(GlobalVal.getOnlineMusicList().get(i));
+            tmpList.add(music);
+        }
+
+        GlobalVal.setConvertedList(tmpList);
     }
 
     @Override
     public void onGetInfoFail(Throwable t) {
         Log.e(TAG, "Get music list failed!" + t.toString());
-    }
-
-    @Override
-    public void onGetPlayLinkSuccess(Object response) {
-        OnlineSong onlineSong = (OnlineSong) response;
-        Log.e(TAG,  " onGetPlayLinkSuccess => " + onlineSong.getSongBitrate().getFile_link());
-    }
-
-    @Override
-    public void onGetPlaylinkFail(Throwable t) {
-        t.printStackTrace();
-        Log.e(TAG, "onGetPlaylinkFail called!");
     }
 }
 

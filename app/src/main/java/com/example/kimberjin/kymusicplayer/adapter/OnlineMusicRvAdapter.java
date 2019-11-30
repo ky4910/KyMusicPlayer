@@ -13,9 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
+import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 import java.util.List;
 
@@ -59,9 +62,14 @@ public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdap
     public void onBindViewHolder(@NonNull OnlineViewHolder onlineViewHolder, int i) {
         OnlineMusic onlineMusic = onlineMusicList.get(i);
 
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.default_music)
+                .priority(Priority.HIGH);
+
         Glide.with(mContext)
                 .load(onlineMusic.getPic_big())
-                .error(R.drawable.default_music)
+                .apply(options)
                 .into(onlineViewHolder.imageView);
 
         String newTitle;
@@ -74,7 +82,9 @@ public class OnlineMusicRvAdapter extends RecyclerView.Adapter<OnlineMusicRvAdap
 
         onlineViewHolder.textTitle.setText(newTitle);
         onlineViewHolder.textArtist.setText(onlineMusic.getArtist_name());
-        onlineViewHolder.textDuration.setText(onlineMusic.getFile_duration());
+        // onlineViewHolder.textDuration.setText(onlineMusic.getFile_duration());
+        onlineViewHolder.textDuration.setText(GeneralUtil.
+                formatLocalSongTime(Integer.valueOf(onlineMusic.getFile_duration())*1000));
     }
 
     @Override

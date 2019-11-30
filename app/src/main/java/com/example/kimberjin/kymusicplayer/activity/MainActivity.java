@@ -13,6 +13,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.FragmentAdapter;
 import com.example.kimberjin.kymusicplayer.adapter.MyViewPagerAdapter;
@@ -146,8 +148,7 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
 
     @Override
     public void onMusicCurrentPosition(int currentPosition) {
-        int tmpValue = currentPosition;
-        int progress = tmpValue * 100 / (int)GlobalVal.getPlayingMusic().getDuration();
+        int progress = currentPosition * 100 / GlobalVal.getPlayingMusic().getDuration();
         mSeekBarCurrent.setProgress(progress);
     }
 
@@ -173,7 +174,12 @@ public class MainActivity extends BaseActivity implements OnPlayMusicListener, V
         tvTitle.setText(GlobalVal.getPlayingMusic().getTitle());
         tvArtist.setText(GlobalVal.getPlayingMusic().getArtist());
         String imgPath = GlobalVal.getPlayingMusic().getAlbumImgPath();
-        Glide.with(this).load(imgPath).placeholder(R.drawable.default_music).into(imgView);
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.drawable.default_music)
+                .priority(Priority.HIGH);
+        Glide.with(this).load(imgPath).apply(options).into(imgView);
     }
 
     /*  Do not use fragemnt for detail part, and use activity instead.  */

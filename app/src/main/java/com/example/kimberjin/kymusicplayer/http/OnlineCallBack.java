@@ -8,7 +8,4 @@ public interface OnlineCallBack<T> {
     void onGetInfoSuccess(T response);
     void onGetInfoFail(Throwable t);
 
-    void onGetPlayLinkSuccess(T response);
-    void onGetPlaylinkFail(Throwable t);
-
 }

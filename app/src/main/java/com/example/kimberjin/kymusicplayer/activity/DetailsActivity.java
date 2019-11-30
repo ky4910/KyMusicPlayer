@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.DetailsVpAdapter;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
@@ -87,11 +90,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private void initUi() {
         Music music = GlobalVal.getPlayingMusic();
         // init detail activity UI
-//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon_2);
-        Bitmap bmp = BitmapFactory.decodeFile(music.getAlbumImgPath());
-        if (bmp == null)
-            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.default_music);
-        albumView.setImage(ImageTools.scaleBitmap(bmp, (int)(MusicApplication.mScreenWidth*0.7)));
+        setAlbumImage();
         tv_singer.setText(music.getArtist());
 
         MarginLayoutParams mPara = (MarginLayoutParams)seekBar.getLayoutParams();
@@ -177,11 +176,9 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     private void updateUI() {
         Music music = GlobalVal.getPlayingMusic();
         // init detail activity UI
-//        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon_2);
-        Bitmap bmp = BitmapFactory.decodeFile(music.getAlbumImgPath());
-        if (bmp == null)
-            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.default_music);
-        albumView.setImage(ImageTools.scaleBitmap(bmp, (int)(MusicApplication.mScreenWidth*0.7)));
+        Log.e(TAG, "albumImagePath:" + music.getAlbumImgPath());
+
+        setAlbumImage();
         tv_detail_music_title.setText(music.getTitle());
         tv_singer.setText(music.getArtist());
 
@@ -197,6 +194,40 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
             albumView.pause();
             Log.e(TAG, "pause rotation!");
             play_current_music.setImageResource(R.drawable.player_btn_play_normal);
+        }
+    }
+
+    private void setAlbumImage() {
+        if (GlobalVal.isPlayingOnline()) {
+            Log.e(TAG, "isPlayingOnline!");
+            new Thread() {
+                @Override
+                public void run() {
+                    Music music = GlobalVal.getPlayingMusic();
+                    RequestOptions options = new RequestOptions()
+                            .centerCrop()
+                            .placeholder(R.drawable.default_music)
+                            .priority(Priority.HIGH);
+                    try {
+                        Bitmap bmp = Glide.with(getApplicationContext()).asBitmap().load(music.getAlbumImgPath())
+                                .apply(options).submit(500, 500).get();
+                        if (bmp == null) {
+                            bmp = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon);
+                        }
+                        albumView.setImage(ImageTools.scaleBitmap(bmp, (int)(MusicApplication.mScreenWidth*0.7)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
+        } else {
+            Music music = GlobalVal.getPlayingMusic();
+            Log.e(TAG, "do not playing online!");
+            Bitmap bmp = BitmapFactory.decodeFile(music.getAlbumImgPath());
+            if (bmp == null)
+                bmp = BitmapFactory.decodeResource(getResources(), R.drawable.default_music);
+            albumView.setImage(ImageTools.scaleBitmap(bmp, (int)(MusicApplication.mScreenWidth*0.7)));
         }
     }
 

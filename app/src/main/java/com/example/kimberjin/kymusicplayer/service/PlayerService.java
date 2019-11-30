@@ -12,6 +12,10 @@ import android.util.Log;
 
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.bean.Music;
+import com.example.kimberjin.kymusicplayer.bean.OnlineSong;
+import com.example.kimberjin.kymusicplayer.http.ApiService;
+import com.example.kimberjin.kymusicplayer.http.HttpClient;
+import com.example.kimberjin.kymusicplayer.http.HttpHelper;
 import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 import java.io.IOException;
@@ -19,6 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 // https://www.cnblogs.com/io1024/p/11568507.html
 
@@ -72,11 +82,40 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
         onPlayNext();
     }
 
-    public void play(List<Music> list, int position) {
+    public void play(final List<Music> list, final int position) {
         music_position = position;
 //        playing_progress = 0;
         musicList = list;
-        play(list.get(position));
+        Music music = list.get(position);
+        if (music.getUrl().equals("none")) {
+            HttpHelper.getRequestInstance().getMusicLink(music.getId() + "",
+                    "baidu.ting.song.play").subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<OnlineSong>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(OnlineSong onlineSong) {
+                            list.get(position).setUrl(onlineSong.getSongBitrate().getFile_link());
+                            play(list.get(position));
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        } else {
+            play(list.get(position));
+        }
     }
 
     /*
@@ -115,7 +154,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
             GlobalVal.setLocalMusicList(musicList);
             Log.i(TAG, "Get Local Musics Done!");
         } else {
-            Log.i(TAG, "There is no local musics");
+            Log.i(TAG, "There is no local musics!");
         }
     }
 
@@ -162,7 +201,8 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 
     @Override
     public void onPlay() {
-        play(musicList.get(music_position));
+        // play(musicList.get(music_position));
+        play(musicList, music_position);
     }
 
     @Override
@@ -173,6 +213,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     @Override
     public void onPlayNext() {
         playing_progress = 0;
+        musicList = GlobalVal.getPlayingList();
         if (musicList == null) {
             musicList = GeneralUtil.getLocalMusics();
         }
@@ -188,6 +229,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
     public void onPlayPrev() {
         playing_progress = 0;
         GlobalVal.setIsPlaying(true);
+        musicList = GlobalVal.getPlayingList();
         if (musicList == null) {
             musicList = GeneralUtil.getLocalMusics();
         }

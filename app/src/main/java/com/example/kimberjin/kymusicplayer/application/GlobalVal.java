@@ -5,7 +5,6 @@ import android.content.Context;
 
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.bean.OnlineMusic;
-import com.example.kimberjin.kymusicplayer.bean.OnlineMusicList;
 import com.example.kimberjin.kymusicplayer.service.PlayerService;
 
 import java.util.ArrayList;
@@ -19,11 +18,15 @@ public class GlobalVal {
     private static GlobalVal mGlobalVal;
     private static Context mContext;
     private PlayerService mPlayerService;
-    private PlayerService.MusicBinder mBinder;
     private static Music mPlayingMusic;
     private List<Music> localMusicList = new ArrayList<>();
     private List<OnlineMusic> onlineMusicList = new ArrayList<>();
+    private List<Music> convertedList = new ArrayList<>();
+
+    private List<Music> playingList = new ArrayList<>();
+
     private static boolean isPlaying = false;
+    private static boolean playingOnline = false;
 
     private GlobalVal() {}
 
@@ -81,6 +84,30 @@ public class GlobalVal {
 
     public static List<OnlineMusic> getOnlineMusicList() {
         return getInstance().onlineMusicList;
+    }
+
+    public static void setPlayingOnline(boolean flag) {
+        playingOnline = flag;
+    }
+
+    public static boolean isPlayingOnline() {
+        return playingOnline;
+    }
+
+    public static List<Music> getConvertedList() {
+        return getInstance().convertedList;
+    }
+
+    public static void setConvertedList(List<Music> convertedList) {
+        getInstance().convertedList = convertedList;
+    }
+
+    public static List<Music> getPlayingList() {
+        return getInstance().playingList;
+    }
+
+    public static void setPlayingList(List<Music> playingList) {
+        getInstance().playingList = playingList;
     }
 
     public static void clearAll() {

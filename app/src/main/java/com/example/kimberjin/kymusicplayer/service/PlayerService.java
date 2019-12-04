@@ -13,8 +13,7 @@ import android.util.Log;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.bean.OnlineSong;
-import com.example.kimberjin.kymusicplayer.http.ApiService;
-import com.example.kimberjin.kymusicplayer.http.HttpClient;
+import com.example.kimberjin.kymusicplayer.database.DbClient;
 import com.example.kimberjin.kymusicplayer.http.HttpHelper;
 import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
@@ -25,7 +24,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -135,7 +133,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
             GlobalVal.setIsPlaying(true);
             GlobalVal.setPlayingMusic(music);
             mPlayerServiceListener.onMusicPlay();
-            // TODO: write history data to Database
+            DbClient.addMusic(music);
             handler.sendEmptyMessage(1);
         } catch (IOException e) {
             e.printStackTrace();

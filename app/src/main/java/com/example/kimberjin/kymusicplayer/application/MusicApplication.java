@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.example.kimberjin.kymusicplayer.database.DbClient;
 import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 /**
@@ -25,6 +26,7 @@ public class MusicApplication extends Application {
 
         GlobalVal.init(this);
         GeneralUtil.init(this);
+        DbClient.init(this);
 
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();

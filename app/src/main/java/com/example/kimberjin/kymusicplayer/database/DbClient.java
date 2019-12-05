@@ -1,5 +1,6 @@
 package com.example.kimberjin.kymusicplayer.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -52,28 +53,19 @@ public class DbClient {
                 return ;
             }
         }
-        /*
-        public static final String TABLE_PLAY_HISTORY = "PlayHistory";
-        public static final String MUSIC_ID = "songId";
-        public static final String MUSIC_TITLE = "title";
-        public static final String MUSIC_IMG_PATH = "albumImgPath";
-        public static final String MUSIC_ARTIST = "artist";
-        public static final String MUSIC_DURATION = "duration";
-        public static final String MUSIC_URL = "url";
-        public static final String MUSIC_LRC_LINK = "lrcLink";
-        */
         db = database.getWritableDatabase();
-        db.execSQL("insert into " + TABLE_PLAY_HISTORY + "("
-                + MUSIC_ID + ","
-                + MUSIC_TITLE + ","
-                + MUSIC_IMG_PATH + ","
-                + MUSIC_ARTIST + ","
-                + MUSIC_DURATION + ","
-                + MUSIC_URL + ","
-                + MUSIC_LRC_LINK
-                + ") values(?,?,?,?,?,?,?)", new Object[]
-                {music.getId(), music.getTitle(), music.getAlbumImgPath(), music.getArtist(),
-                        music.getDuration(), music.getUrl(), music.getLrcLink()});
+
+        ContentValues values = new ContentValues();
+
+        values.put(MUSIC_ID, music.getId());
+        values.put(MUSIC_TITLE, music.getTitle());
+        values.put(MUSIC_IMG_PATH, music.getAlbumImgPath());
+        values.put(MUSIC_ARTIST, music.getArtist());
+        values.put(MUSIC_DURATION, music.getDuration());
+        values.put(MUSIC_URL, music.getUrl());
+        values.put(MUSIC_LRC_LINK, music.getLrcLink());
+
+        db.insert(TABLE_PLAY_HISTORY, null, values);
     }
 
     public static List<Music> getMusic() {

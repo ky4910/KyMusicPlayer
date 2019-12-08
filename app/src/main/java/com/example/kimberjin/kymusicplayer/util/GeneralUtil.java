@@ -105,8 +105,6 @@ public class GeneralUtil {
      */
     public static String formatLocalSongTime(long milliseconds) {
 
-        Log.i(TAG, "unformatted time is " + milliseconds);
-
         if (milliseconds <= 0 || milliseconds >= 24 * 60 * 60 * 1000) {
             Log.e(TAG, "duration is " + milliseconds);
             return "00:00";

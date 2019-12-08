@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.HistoryMusicListAdapter;
+import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.database.DbClient;
 
@@ -47,7 +48,8 @@ public class HistoryFragment extends BaseFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                getPlayerService().play(historyMusicList.get(position));
+                GlobalVal.setPlayingList(historyMusicList);
+                getPlayerService().play(historyMusicList, position);
             }
         });
 

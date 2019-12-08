@@ -85,7 +85,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 //        playing_progress = 0;
         musicList = list;
         Music music = list.get(position);
-        if (music.getUrl().equals("none")) {
+        if (music.getUrl().equals("none") || GlobalVal.isPlayingOnline()) {
             HttpHelper.getRequestInstance().getMusicLink(music.getId() + "",
                     "baidu.ting.song.play").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

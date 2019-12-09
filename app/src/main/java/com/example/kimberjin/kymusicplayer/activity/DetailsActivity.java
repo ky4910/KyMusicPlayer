@@ -25,6 +25,7 @@ import com.example.kimberjin.kymusicplayer.service.IPlayerService;
 import com.example.kimberjin.kymusicplayer.service.OnPlayMusicListener;
 import com.example.kimberjin.kymusicplayer.service.PlayerService;
 import com.example.kimberjin.kymusicplayer.ui.AlbumView;
+import com.example.kimberjin.kymusicplayer.util.AppConst;
 import com.example.kimberjin.kymusicplayer.util.ImageTools;
 
 import java.util.ArrayList;
@@ -198,7 +199,7 @@ public class DetailsActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void setAlbumImage() {
-        if (GlobalVal.isPlayingOnline()) {
+        if (GlobalVal.getPlayingMusic().getType() == AppConst.ONLINE_SONG) {
             Log.e(TAG, "isPlayingOnline!");
             new Thread() {
                 @Override

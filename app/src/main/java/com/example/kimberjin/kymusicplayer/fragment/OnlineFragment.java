@@ -100,7 +100,6 @@ public class OnlineFragment extends BaseFragment implements OnlineCallBack {
             public void onItemClicked(View view, int position) {
                 Toast.makeText(getContext(), onlineList.get(position).getTitle()
                         + " selected!", Toast.LENGTH_SHORT).show();
-                GlobalVal.setPlayingOnline(true);
                 GlobalVal.setPlayingList(GlobalVal.getConvertedList());
                 getPlayerService().play(GlobalVal.getConvertedList(), position);
             }

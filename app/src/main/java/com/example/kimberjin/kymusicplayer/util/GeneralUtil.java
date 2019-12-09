@@ -54,7 +54,7 @@ public class GeneralUtil {
             String imgPath = convertAlbumId2Path(albumId);
             String composer = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.COMPOSER));
             String data_added = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED));
-            Music music = new Music(id, title, albumId, imgPath, artist, duration, url, null, composer, data_added);
+            Music music = new Music(id, title, albumId, imgPath, artist, duration, url, null, composer, data_added, AppConst.LOCAL_SONG);
             musicList.add(music);
         }
 
@@ -93,6 +93,7 @@ public class GeneralUtil {
         music.setAlbumImgPath(onlineMusic.getPicPremium());
         music.setLrcLink(onlineMusic.getLrclink());
         music.setUrl("none");
+        music.setType(AppConst.ONLINE_SONG);
 
         return music;
     }

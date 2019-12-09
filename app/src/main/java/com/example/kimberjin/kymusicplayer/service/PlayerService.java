@@ -15,6 +15,7 @@ import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.bean.OnlineSong;
 import com.example.kimberjin.kymusicplayer.database.DbClient;
 import com.example.kimberjin.kymusicplayer.http.HttpHelper;
+import com.example.kimberjin.kymusicplayer.util.AppConst;
 import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 
 import java.io.IOException;
@@ -85,7 +86,7 @@ public class PlayerService extends Service implements MediaPlayer.OnCompletionLi
 //        playing_progress = 0;
         musicList = list;
         Music music = list.get(position);
-        if (music.getUrl().equals("none") || GlobalVal.isPlayingOnline()) {
+        if (music.getType() == AppConst.ONLINE_SONG) {
             HttpHelper.getRequestInstance().getMusicLink(music.getId() + "",
                     "baidu.ting.song.play").subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

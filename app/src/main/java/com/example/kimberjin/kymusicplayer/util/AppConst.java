@@ -5,6 +5,9 @@ package com.example.kimberjin.kymusicplayer.util;
  */
 public class AppConst {
 
+    public static int LOCAL_SONG = 1;
+    public static int ONLINE_SONG = 2;
+
     //short time
     int MUSIC_DURATION = 10000;// 10 seconds
 
@@ -13,12 +16,11 @@ public class AppConst {
     String ACTION_DURATION = "action_duration";
     String ACTION_PROGRESS = "action_progress";
     String ACTION_PLAY_STOP = "action_play_stop"; //暂停、播放
+
     //control the playing progress of music by seekBar
     String ACTION__CONTROL_PROGRESS = "action__control_progress";
     String ACTION__NEXT = "action_next";
     String ACTION__PREVIOUS = "action_previous";
-    //String ACTION_STOP = "action_stop";
-    //String ACTION_PLAY = "action_play";
 
     int CIRCLE_ALL = 6;
     int CIRCLE_SINGLE = 7;
@@ -30,5 +32,4 @@ public class AppConst {
     String MSG_PROGRESS = "msg_progress";
     String MSG_STATE = "state";
     String MSG_PLAY_POSITION = "msg_play_position";
-
 }

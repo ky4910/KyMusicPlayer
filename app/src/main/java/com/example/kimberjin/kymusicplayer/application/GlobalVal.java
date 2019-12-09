@@ -26,7 +26,6 @@ public class GlobalVal {
     private List<Music> playingList = new ArrayList<>();
 
     private static boolean isPlaying = false;
-    private static boolean playingOnline = false;
 
     private GlobalVal() {}
 
@@ -84,14 +83,6 @@ public class GlobalVal {
 
     public static List<OnlineMusic> getOnlineMusicList() {
         return getInstance().onlineMusicList;
-    }
-
-    public static void setPlayingOnline(boolean flag) {
-        playingOnline = flag;
-    }
-
-    public static boolean isPlayingOnline() {
-        return playingOnline;
     }
 
     public static List<Music> getConvertedList() {

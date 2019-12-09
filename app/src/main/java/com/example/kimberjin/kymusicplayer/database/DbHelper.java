@@ -18,8 +18,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_PLAY_LIST = "create table PlayHistory ("
             + "id integer primary key autoincrement, "
-            + "songId text, " + "title text, " + "albumImgPath text, "
-            + "artist text, " + "duration integer, " + "url text, " + "lrcLink text)";
+            + "songId text, " + "title text, " + "albumImgPath text, " + "artist text, "
+            + "duration integer, " + "url text, " + "lrcLink text, " + "type integer)";
 
     public DbHelper(Context context) {
         super(context, "music.db", null, 1);

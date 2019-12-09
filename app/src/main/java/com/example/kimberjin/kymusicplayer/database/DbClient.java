@@ -23,14 +23,15 @@ public class DbClient {
     private static DbHelper database;
     private static SQLiteDatabase db;
 
-    public static final String TABLE_PLAY_HISTORY = "PlayHistory";
-    public static final String MUSIC_ID = "songId";
-    public static final String MUSIC_TITLE = "title";
-    public static final String MUSIC_IMG_PATH = "albumImgPath";
-    public static final String MUSIC_ARTIST = "artist";
-    public static final String MUSIC_DURATION = "duration";
-    public static final String MUSIC_URL = "url";
-    public static final String MUSIC_LRC_LINK = "lrcLink";
+    private static final String TABLE_PLAY_HISTORY = "PlayHistory";
+    private static final String MUSIC_ID = "songId";
+    private static final String MUSIC_TITLE = "title";
+    private static final String MUSIC_IMG_PATH = "albumImgPath";
+    private static final String MUSIC_ARTIST = "artist";
+    private static final String MUSIC_DURATION = "duration";
+    private static final String MUSIC_URL = "url";
+    private static final String MUSIC_LRC_LINK = "lrcLink";
+    private static final String MUSIC_TYPE = "type";
 
     public static void init(Context context) {
         mContext = context;
@@ -43,7 +44,7 @@ public class DbClient {
         Log.e(TAG, "kimber => add item to database! " + music.getTitle());
 
         // 最多保存50条音乐数据
-        if (checkList.size() == 50) {
+        if (checkList.size() == 30) {
             return;
         }
 
@@ -64,6 +65,7 @@ public class DbClient {
         values.put(MUSIC_DURATION, music.getDuration());
         values.put(MUSIC_URL, music.getUrl());
         values.put(MUSIC_LRC_LINK, music.getLrcLink());
+        values.put(MUSIC_TYPE, music.getType());
 
         db.insert(TABLE_PLAY_HISTORY, null, values);
     }
@@ -87,6 +89,7 @@ public class DbClient {
             int duration = cursor.getInt(cursor.getColumnIndex(MUSIC_DURATION));
             String url = cursor.getString(cursor.getColumnIndex(MUSIC_URL));
             String lrcLink = cursor.getString(cursor.getColumnIndex(MUSIC_LRC_LINK));
+            int type = cursor.getInt(cursor.getColumnIndex(MUSIC_TYPE));
 
             music.setId(id);
             music.setTitle(title);
@@ -95,6 +98,7 @@ public class DbClient {
             music.setDuration(duration);
             music.setUrl(url);
             music.setLrcLink(lrcLink);
+            music.setType(type);
 
             list.add(music);
         }

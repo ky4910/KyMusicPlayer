@@ -15,6 +15,7 @@ public class Music {
     private String lrcLink;
     private String composer;
     private String data_added;
+    private int type;
 
     public long getId() {
         return id;
@@ -96,10 +97,18 @@ public class Music {
         this.data_added = data_added;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     public Music() {}
 
     public Music(long id, String title, String albumId, String albumImgPath, String artist, int duration,
-                 String url, String lrcLink, String composer, String data_added) {
+                 String url, String lrcLink, String composer, String data_added, int type) {
         this.id = id;
         this.title = title;
         this.albumId = albumId;
@@ -110,6 +119,7 @@ public class Music {
         this.lrcLink = lrcLink;
         this.composer = composer;
         this.data_added = data_added;
+        this.type = type;
     }
 
     @Override

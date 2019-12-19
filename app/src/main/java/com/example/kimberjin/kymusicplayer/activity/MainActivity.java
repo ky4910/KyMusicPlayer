@@ -31,6 +31,14 @@ import com.example.kimberjin.kymusicplayer.application.GlobalVal;
 
 // 可依音乐播放器
 
+/*
+Bugs：
+1. DetailsActivity 歌曲名显示不全
+2. 网络请求失败处理（网络状况不佳或者无网情况）
+3. DetailsActivity中，pause返回后BottomBar的Button状态错误
+4. 第一次进入APP，直接点击BottomBar的playButton Error
+*/
+
 public class MainActivity extends BaseActivity implements OnPlayMusicListener, View.OnClickListener {
 
     private TabLayout tabLayout;

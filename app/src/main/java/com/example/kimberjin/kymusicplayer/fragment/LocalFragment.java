@@ -1,8 +1,10 @@
 package com.example.kimberjin.kymusicplayer.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout;
 import com.example.kimberjin.kymusicplayer.R;
 import com.example.kimberjin.kymusicplayer.adapter.LocalMusicRvAdapter;
 import com.example.kimberjin.kymusicplayer.bean.Music;
 import com.example.kimberjin.kymusicplayer.application.GlobalVal;
+import com.example.kimberjin.kymusicplayer.util.GeneralUtil;
 import com.example.kimberjin.kymusicplayer.util.SpacesItemDecoration;
 
 import java.util.ArrayList;
@@ -40,6 +44,7 @@ public class LocalFragment extends BaseFragment {
     public static final String TAG = "Local_Fragment";
 
     private RecyclerView recyclerView;
+    private FireworkyPullToRefreshLayout refreshLayout;
     LocalMusicRvAdapter rvAdapter;
 
     private List<Music> localSongsList = new ArrayList<>();
@@ -65,6 +70,7 @@ public class LocalFragment extends BaseFragment {
         Log.i(TAG, "initView called!");
         localSongsList = GlobalVal.getLocalMusicList();
         recyclerView = view.findViewById(R.id.rv_local_music);
+        refreshLayout = view.findViewById(R.id.fireRefreshLayout);
         Log.e(TAG, "List size is " + localSongsList.size());
         rvAdapter = new LocalMusicRvAdapter(getContext(), localSongsList);
 
@@ -79,6 +85,19 @@ public class LocalFragment extends BaseFragment {
         recyclerView.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
 
         recyclerView.setAdapter(rvAdapter);
+
+        refreshLayout.getConfig().setBackgroundColor(Color.LTGRAY);
+
+        // 下拉刷新
+        refreshLayout.setOnRefreshListener(new FireworkyPullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                GeneralUtil.getLocalMusics();
+                refreshLayout.setRefreshing(false);
+                rvAdapter.notifyDataSetChanged();
+            }
+        });
+
         rvAdapter.setOnItemClickListener(new LocalMusicRvAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(View view, int position) {

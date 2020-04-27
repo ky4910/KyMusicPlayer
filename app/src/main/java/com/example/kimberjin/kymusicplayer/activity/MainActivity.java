@@ -43,6 +43,8 @@ Bugs：
 
 public class MainActivity extends BaseActivity implements OnPlayMusicListener, View.OnClickListener {
 
+    // do a test for company commit
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
     protected MyViewPagerAdapter pagerAdapter;
